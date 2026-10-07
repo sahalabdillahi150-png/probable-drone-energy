@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="DEMI VR PCB – Calais & Marck. Programme pilote de formation en électronique, PCB, IoT, STM32/ESP32 et réalité virtuelle immersive."
+    />
+    <title>DEMI VR PCB – Calais & Marck</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwUEQp3/7dXK6lZ5tMZ99G3I0WTQwF4M6mQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <div class="brand">
+          <div class="brand-mark">DEMI</div>
+          <div class="brand-text">
+            <strong>VR PCB</strong>
+            <span>Calais & Marck</span>
+          </div>
+        </div>
+
+        <nav class="main-nav" aria-label="Navigation principale">
+          <a href="#approche">Approche</a>
+          <a href="#parcours">Parcours</a>
+          <a href="#equipements">Équipements</a>
+          <a href="#demo">Démo VR</a>
+          <a href="#budget">Budget</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <a href="#contact" class="btn btn-primary">Rejoindre le programme</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="bg-grid"></div>
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow">Programme pilote • Formation professionnelle</span>
+            <h1>DEMI VR PCB</h1>
+            <p class="subtitle">
+              Former les jeunes aux métiers de l'électronique, du numérique et de la
+              réalité virtuelle
+            </p>
+            <div class="cta-row">
+              <a href="#approche" class="btn btn-primary">Découvrir</a>
+              <a href="#contact" class="btn btn-secondary">Rejoindre le programme</a>
+              <a href="#demo" class="btn btn-ghost">Tester la démo VR</a>
+            </div>
+            <ul class="hero-stats">
+              <li><strong>12–25 ans</strong><span>Public cible</span></li>
+              <li><strong>6 niveaux</strong><span>Parcours guidé</span></li>
+              <li><strong>Meta Quest 3S</strong><span>Expérience immersive</span></li>
+            </ul>
+          </div>
+
+          <div class="hero-visual" aria-label="Illustration du programme DEMI VR PCB">
+            <div class="panel board-panel">
+              <div class="chip chip-one"></div>
+              <div class="chip chip-two"></div>
+              <div class="chip chip-three"></div>
+              <div class="board-lines"></div>
+            </div>
+            <div class="panel headset-panel">
+              <div class="headset">
+                <span class="lens lens-left"></span>
+                <span class="lens lens-right"></span>
+                <span class="strap"></span>
+              </div>
+            </div>
+            <div class="panel youth-panel">
+              <div class="people people-one"></div>
+              <div class="people people-two"></div>
+              <div class="people people-three"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="approche" class="section">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow eyebrow-alt">Notre approche</span>
+            <h2>Une pédagogie concrète au service de la transition numérique</h2>
+          </div>
+
+          <div class="card-grid three-col">
+            <article class="feature-card">
+              <div class="icon-circle"><i class="fa-solid fa-code"></i></div>
+              <h3>Numérique</h3>
+              <ul>
+                <li>GitHub</li>
+                <li>Programmation</li>
+                <li>IoT</li>
+              </ul>
+            </article>
+
+            <article class="feature-card">
+              <div class="icon-circle"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+              <h3>Atelier PCB</h3>
+              <ul>
+                <li>Soudure</li>
+                <li>Prototypage</li>
+                <li>Fabrication</li>
+              </ul>
+            </article>
+
+            <article class="feature-card">
+              <div class="icon-circle"><i class="fa-solid fa-vr-cardboard"></i></div>
+              <h3>Réalité Virtuelle</h3>
+              <ul>
+                <li>Meta Quest</li>
+                <li>A-Frame</li>
+                <li>WebXR</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="parcours" class="section alt-section">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow eyebrow-alt">Parcours pédagogique</span>
+            <h2>Du fondamental à la création de projets concrets</h2>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <span class="level">Niveau 1</span>
+              <p>LED et résistances</p>
+            </div>
+            <div class="timeline-item">
+              <span class="level">Niveau 2</span>
+              <p>Capteurs</p>
+            </div>
+            <div class="timeline-item">
+              <span class="level">Niveau 3</span>
+              <p>STM32</p>
+            </div>
+            <div class="timeline-item">
+              <span class="level">Niveau 4</span>
+              <p>ESP32 IoT</p>
+            </div>
+            <div class="timeline-item">
+              <span class="level">Niveau 5</span>
+              <p>PCB</p>
+            </div>
+            <div class="timeline-item">
+              <span class="level">Niveau 6</span>
+              <p>Projet final</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="equipements" class="section">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow eyebrow-alt">Équipements</span>
+            <h2>Des outils pour apprendre, expérimenter et créer</h2>
+          </div>
+
+          <div class="card-grid equipment-grid">
+            <article class="equipment-card">
+              <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=80" alt="Meta Quest 3S" />
+              <div class="equipment-content">
+                <h3>Meta Quest 3S</h3>
+                <p>Casque immersif pour simuler des ateliers techniques et explorer la réalité virtuelle.</p>
+                <span>Utilité pédagogique : immersion, visualisation 3D, pédagogie interactive</span>
+              </div>
+            </article>
+
+            <article class="equipment-card">
+              <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=800&q=80" alt="STM32 Nucleo" />
+              <div class="equipment-content">
+                <h3>STM32 Nucleo</h3>
+                <p>Carte de développement idéale pour programmer des systèmes embarqués.</p>
+                <span>Utilité pédagogique : microcontrôleur, capteurs, logique embarquée</span>
+              </div>
+            </article>
+
+            <article class="equipment-card">
+              <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="ESP32" />
+              <div class="equipment-content">
+                <h3>ESP32</h3>
+                <p>Module connecté pour apprendre l’Internet des objets, le Wi-Fi et les protocoles.</p>
+                <span>Utilité pédagogique : IoT, connectivité, objets intelligents</span>
+              </div>
+            </article>
+
+            <article class="equipment-card">
+              <img src="https://images.unsplash.com/photo-1580983277924-9f0cb6241d52?auto=format&fit=crop&w=800&q=80" alt="Multimètre" />
+              <div class="equipment-content">
+                <h3>Multimètre</h3>
+                <p>Outil essentiel pour mesurer tension, intensité et continuité.</p>
+                <span>Utilité pédagogique : diagnostic, sécurité, compréhension des circuits</span>
+              </div>
+            </article>
+
+            <article class="equipment-card">
+              <img src="https://images.unsplash.com/photo-1553406830-6c9c33ce4f46?auto=format&fit=crop&w=800&q=80" alt="Oscilloscope" />
+              <div class="equipment-content">
+                <h3>Oscilloscope</h3>
+                <p>Analyse visuelle des signaux électriques pour diagnostiquer les montages.</p>
+                <span>Utilité pédagogique : observation, analyse, apprentissage du signal</span>
+              </div>
+            </article>
+
+            <article class="equipment-card">
+              <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=800&q=80" alt="Station de soudure" />
+              <div class="equipment-content">
+                <h3>Station de soudure</h3>
+                <p>Pour assembler, réparer et prototyper des cartes électroniques.</p>
+                <span>Utilité pédagogique : assemblage, précision, fabrication</span>
+              </div>
+            </article>
+
+            <article class="equipment-card">
+              <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a6a6?auto=format&fit=crop&w=800&q=80" alt="Breadboards" />
+              <div class="equipment-content">
+                <h3>Breadboards</h3>
+                <p>Support de prototypage rapide pour tester des montages sans soudure.</p>
+                <span>Utilité pédagogique : expérimentation, itérations, apprentissage pratique</span>
+              </div>
+            </article>
+
+            <article class="equipment-card">
+              <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="Ordinateurs" />
+              <div class="equipment-content">
+                <h3>Ordinateurs</h3>
+                <p>Stations de travail pour le code, la simulation, la conception et la programmation.</p>
+                <span>Utilité pédagogique : IDE, GitHub, fichiers de projet, analyse</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="demo" class="section demo-section alt-section">
+        <div class="container demo-layout">
+          <div class="section-heading text-left">
+            <span class="eyebrow eyebrow-alt">Démo VR</span>
+            <h2>Explorez un atelier immersif en réalité virtuelle</h2>
+            <p>
+              Une salle VR interactive avec un cube, une LED virtuelle et un panneau
+              d’informations, pensée pour fonctionner dans un navigateur Meta Quest.
+            </p>
+            <button class="btn btn-primary" id="enter-vr-btn">Entrer en VR</button>
+          </div>
+
+          <div class="vr-scene-card">
+            <a-scene embedded id="vr-scene" vr-mode-ui="enabled: false">
+              <a-assets>
+                <img id="gridTexture" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="texture" />
+              </a-assets>
+
+              <a-sky color="#0b1220"></a-sky>
+              <a-plane
+                rotation="-90 0 0"
+                width="20"
+                height="20"
+                color="#0d1b2a"
+              ></a-plane>
+
+              <a-box
+                id="interactiveCube"
+                position="0 1 -3"
+                width="1"
+                height="1"
+                depth="1"
+                color="#00A86B"
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear"
+                event-set__click="_target: #interactiveCube; material.color: #FF8C00"
+              ></a-box>
+
+              <a-light type="point" position="0 3 0" intensity="1.5"></a-light>
+
+              <a-entity position="0 2.4 -4">
+                <a-text
+                  value="DEMI VR PCB\nAtelier électronique"
+                  color="#ffffff"
+                  align="center"
+                  font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                  scale="1.2 1.2 1.2"
+                ></a-text>
+              </a-entity>
+
+              <a-entity position="-1.5 0.8 -3.2">
+                <a-sphere radius="0.2" color="#FF8C00" id="ledVirtual"></a-sphere>
+              </a-entity>
+
+              <a-entity position="2 1.2 -3.2">
+                <a-box width="2" height="1.2" depth="0.1" color="#0057B8" opacity="0.8"></a-box>
+                <a-text
+                  value="Panneau d'information\nLED active • Niveau 2"
+                  position="0 0 0.08"
+                  color="#ffffff"
+                  align="center"
+                  font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                  scale="0.7 0.7 0.7"
+                ></a-text>
+              </a-entity>
+            </a-scene>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow eyebrow-alt">Quiz VR</span>
+            <h2>Testez vos connaissances</h2>
+          </div>
+
+          <div class="quiz-card">
+            <div class="quiz-header">
+              <h3>Question 1 / 3</h3>
+              <p>Quelle couleur est la LED ?</p>
+            </div>
+
+            <div class="quiz-options">
+              <button class="quiz-choice" data-answer="false">Rouge</button>
+              <button class="quiz-choice correct" data-answer="true">Bleu</button>
+              <button class="quiz-choice" data-answer="false">Vert</button>
+            </div>
+
+            <div class="quiz-result">
+              <span>Score : </span>
+              <strong id="score-display">0 / 3</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt-section">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow eyebrow-alt">Tableau de bord</span>
+            <h2>Suivi du programme, des ateliers et des formations</h2>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-box">
+              <span class="stat-number">48</span>
+              <span class="stat-label">Jeunes formés</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">12</span>
+              <span class="stat-label">Ateliers</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">6</span>
+              <span class="stat-label">Modules terminés</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">8</span>
+              <span class="stat-label">Casques disponibles</span>
+            </div>
+          </div>
+
+          <div class="charts-grid">
+            <div class="chart-card">
+              <h3>Progression mensuelle</h3>
+              <canvas id="lineChart"></canvas>
+            </div>
+            <div class="chart-card">
+              <h3>Participation</h3>
+              <canvas id="barChart"></canvas>
+            </div>
+            <div class="chart-card full-width">
+              <h3>Certifications</h3>
+              <canvas id="doughnutChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="budget" class="section">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow eyebrow-alt">Budget pilote</span>
+            <h2>Prévision, suivi et balance du programme</h2>
+          </div>
+
+          <div class="budget-wrap">
+            <table class="budget-table">
+              <thead>
+                <tr>
+                  <th>Équipement</th>
+                  <th>Budget prévisionnel</th>
+                  <th>Dépenses réelles</th>
+                  <th>Écart</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Quest 3S</td>
+                  <td>450 €</td>
+                  <td>420 €</td>
+                  <td class="positive">+30 €</td>
+                </tr>
+                <tr>
+                  <td>STM32</td>
+                  <td>220 €</td>
+                  <td>240 €</td>
+                  <td class="negative">-20 €</td>
+                </tr>
+                <tr>
+                  <td>Breadboards</td>
+                  <td>90 €</td>
+                  <td>85 €</td>
+                  <td class="positive">+5 €</td>
+                </tr>
+                <tr>
+                  <td>Composants</td>
+                  <td>380 €</td>
+                  <td>395 €</td>
+                  <td class="negative">-15 €</td>
+                </tr>
+                <tr>
+                  <td>Outillage</td>
+                  <td>210 €</td>
+                  <td>196 €</td>
+                  <td class="positive">+14 €</td>
+                </tr>
+                <tr>
+                  <td>Communication</td>
+                  <td>150 €</td>
+                  <td>160 €</td>
+                  <td class="negative">-10 €</td>
+                </tr>
+                <tr class="total-row">
+                  <td>Total</td>
+                  <td>1500 €</td>
+                  <td>1496 €</td>
+                  <td class="positive">+24 €</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section location-section">
+        <div class="container location-grid">
+          <div class="location-copy">
+            <span class="eyebrow eyebrow-alt">Calais & Marck</span>
+            <h2>Laboratoire pilote DEMI VR PCB</h2>
+            <p>
+              Un espace de formation, d’expérimentation et de collaboration pensé pour
+              renforcer les compétences numériques et techniques des jeunes du territoire.
+            </p>
+          </div>
+
+          <div class="map-card">
+            <div class="map-pins">
+              <span class="pin calais">Calais</span>
+              <span class="pin marck">Marck</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section partners-section">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow eyebrow-alt">Partenaires</span>
+            <h2>Un écosystème de soutien pour le développement du programme</h2>
+          </div>
+
+          <div class="partners-grid">
+            <div class="partner-logo">Ville de Calais</div>
+            <div class="partner-logo">Région Hauts-de-France</div>
+            <div class="partner-logo">Missions Locales</div>
+            <div class="partner-logo">Associations</div>
+            <div class="partner-logo">Écoles</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section contact-section">
+        <div class="container contact-grid">
+          <div class="contact-copy">
+            <span class="eyebrow eyebrow-alt">Contact</span>
+            <h2>Rejoignez le programme DEMI VR PCB</h2>
+            <p>
+              Pour une demande de partenariat, une inscription ou un projet de formation,
+              écrivez-nous.
+            </p>
+          </div>
+
+          <form class="contact-form">
+            <div class="input-row">
+              <label>
+                <span>Nom</span>
+                <input type="text" name="name" placeholder="Votre nom" />
+              </label>
+              <label>
+                <span>Email</span>
+                <input type="email" name="email" placeholder="Votre email" />
+              </label>
+            </div>
+
+            <label>
+              <span>Organisation</span>
+              <input type="text" name="organisation" placeholder="École, association, entreprise..." />
+            </label>
+
+            <label>
+              <span>Message</span>
+              <textarea name="message" rows="5" placeholder="Votre message"></textarea>
+            </label>
+
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <div class="footer-brand">
+          <strong>DEMI VR PCB</strong>
+          <span>Calais & Marck</span>
+        </div>
+
+        <div class="social-links" aria-label="Réseaux sociaux">
+          <a href="https://github.com" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+
+        <p>© DEMI VR PCB 2026</p>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
