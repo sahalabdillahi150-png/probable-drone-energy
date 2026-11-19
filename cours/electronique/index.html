@@ -83,6 +83,24 @@
       background: var(--white);
     }
 
+.lesson-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lesson-card-link:hover,
+.lesson-card-link:focus {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(15, 31, 54, 0.10);
+}
+
+.lesson-card-link:focus {
+  outline: 3px solid #1479ff;
+  outline-offset: 3px;
+}
+
     .lesson-number {
       display: inline-block;
       margin-bottom: 10px;
@@ -172,14 +190,16 @@
 
         <div class="lesson-grid">
 
-          <article class="lesson-card">
-            <span class="lesson-number">Étape 1</span>
-            <h3>⚡ La tension</h3>
-            <p>
-              Comprendre la différence de potentiel électrique et découvrir
-              pourquoi la tension se mesure en volts.
-            </p>
-          </article>
+<a href="lecons/01-tension.html"
+   class="lesson-card lesson-card-link">
+  <span class="lesson-number">Étape 1</span>
+  <h3>⚡ La tension</h3>
+  <p>
+    Comprendre la différence de potentiel électrique et découvrir
+    pourquoi la tension se mesure en volts.
+  </p>
+  <strong>Commencer la leçon →</strong>
+</a>
 
           <article class="lesson-card">
             <span class="lesson-number">Étape 2</span>
