@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Étape 6 - Le multimètre | DEMI VR PCB</title>
+
+  <link rel="stylesheet" href="../../../style.css">
+
+  <style>
+    .lesson-page {
+      padding: 48px 0 80px;
+    }
+
+    .lesson-container {
+      width: min(1000px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .lesson-back {
+      display: inline-block;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+
+    .lesson-hero,
+    .lesson-block,
+    .activity {
+      padding: 30px;
+      margin-bottom: 22px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--white);
+    }
+
+    .lesson-label {
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .mode-card {
+      padding: 22px;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+    }
+
+    .mode-card strong {
+      display: block;
+      margin: 8px 0;
+      font-size: 1.6rem;
+    }
+
+    .activity {
+      background: #eef6ff;
+    }
+
+    .multimeter {
+      max-width: 500px;
+      padding: 28px;
+      margin: 24px auto;
+      border: 4px solid #26364a;
+      border-radius: 28px;
+      background: #33475f;
+    }
+
+    .multimeter-screen {
+      padding: 20px;
+      margin-bottom: 22px;
+      text-align: center;
+      border-radius: 12px;
+      background: #dce8c7;
+      color: #172116;
+    }
+
+    .multimeter-screen strong {
+      display: block;
+      font-size: 2rem;
+    }
+
+    .measurement-target {
+      margin-bottom: 20px;
+      padding: 18px;
+      text-align: center;
+      border-radius: 14px;
+      background: white;
+    }
+
+    .mode-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .mode-button {
+      padding: 14px 10px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 14px;
+      background: #f2f5f8;
+      color: #182638;
+      font: inherit;
+      font-weight: 800;
+    }
+
+    .mode-button:hover,
+    .mode-button:focus {
+      border-color: #1479ff;
+    }
+
+    .mode-button.selected {
+      color: white;
+      background: #1479ff;
+    }
+
+    .measurement-feedback {
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 14px;
+      background: white;
+      font-weight: 700;
+    }
+
+    .measurement-feedback.good {
+      color: #126b42;
+      background: #e8f8ef;
+    }
+
+    .measurement-feedback.bad {
+      color: #8b2c2c;
+      background: #fff0f0;
+    }
+
+    .target-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .target-button {
+      padding: 14px;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: white;
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .target-button.selected {
+      color: white;
+      border-color: #1479ff;
+      background: #1479ff;
+    }
+
+    .quiz-options {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .quiz-button {
+      padding: 14px 16px;
+      text-align: left;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--white);
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .feedback {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 14px;
+      font-weight: 700;
+    }
+
+    .feedback.good {
+      display: block;
+      color: #126b42;
+      background: #e8f8ef;
+    }
+
+    .feedback.bad {
+      display: block;
+      color: #8b2c2c;
+      background: #fff0f0;
+    }
+
+    .lesson-navigation {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .next-link {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .next-link.unlocked {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @media (max-width: 700px) {
+      .mode-grid,
+      .target-buttons,
+      .mode-buttons {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-hero,
+      .lesson-block,
+      .activity {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="../../../index.html">
+      <strong>DEMI VR PCB</strong>
+    </a>
+  </div>
+</header>
+
+<main class="lesson-page">
+  <div class="lesson-container">
+
+    <a class="lesson-back" href="../index.html">
+      ← Retour au parcours Électronique
+    </a>
+
+    <section class="lesson-hero">
+      <p class="lesson-label">
+        Électronique · Niveau 1 · Étape 6/8
+      </p>
+
+      <h1>📏 Le multimètre</h1>
+
+      <p>
+        Le multimètre permet de réaliser plusieurs mesures
+        électriques avec un même instrument.
+      </p>
+
+      <p>
+        Dans cette activité, tu vas apprendre à reconnaître
+        les modes <strong>V</strong>, <strong>A</strong> et
+        <strong>Ω</strong>.
+      </p>
+    </section>
+
+    <section class="lesson-block">
+      <h2>👀 Trois mesures à reconnaître</h2>
+
+      <div class="mode-grid">
+
+        <div class="mode-card">
+          ⚡
+          <strong>V</strong>
+          <span>Tension</span>
+        </div>
+
+        <div class="mode-card">
+          🔄
+          <strong>A</strong>
+          <span>Intensité</span>
+        </div>
+
+        <div class="mode-card">
+          Ω
+          <strong>Ω</strong>
+          <span>Résistance</span>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="activity">
+      <h2>🧪 Multimètre virtuel</h2>
+
+      <p>
+        Sélectionne d'abord ce que tu veux mesurer,
+        puis choisis le mode correspondant sur le multimètre.
+      </p>
+
+      <div class="target-buttons">
+
+        <button
+          class="target-button selected"
+          type="button"
+          data-target="voltage">
+          Mesurer une tension
+        </button>
+
+        <button
+          class="target-button"
+          type="button"
+          data-target="current">
+          Mesurer un courant
+        </button>
+
+        <button
+          class="target-button"
+          type="button"
+          data-target="resistance">
+          Mesurer une résistance
+        </button>
+
+      </div>
+
+      <div class="multimeter">
+
+        <div class="multimeter-screen">
+          MODE
+          <strong id="screenValue">?</strong>
+        </div>
+
+        <div class="measurement-target">
+          Objectif :
+          <strong id="targetText">
+            mesurer une tension
+          </strong>
+        </div>
+
+        <div class="mode-buttons">
+
+          <button
+            class="mode-button"
+            type="button"
+            data-mode="voltage">
+            V
+          </button>
+
+          <button
+            class="mode-button"
+            type="button"
+            data-mode="current">
+            A
+          </button>
+
+          <button
+            class="mode-button"
+            type="button"
+            data-mode="resistance">
+            Ω
+          </button>
+
+        </div>
+
+        <div
+          id="measurementFeedback"
+          class="measurement-feedback"
+          aria-live="polite">
+          Choisis le mode de mesure.
+        </div>
+
+      </div>
+    </section>
+    <section class="lesson-block">
+      <h2>🧠 À retenir</h2>
+
+      <ul>
+        <li>Le multimètre permet d'effectuer plusieurs types de mesures électriques.</li>
+        <li>Le mode V correspond à la mesure d'une tension.</li>
+        <li>Le mode A correspond à la mesure d'une intensité.</li>
+        <li>Le mode Ω correspond à la mesure d'une résistance.</li>
+        <li>Il faut sélectionner le mode adapté à la grandeur que l'on souhaite mesurer.</li>
+      </ul>
+    </section>
+
+    <section class="lesson-block">
+      <h2>❓ Vérifie tes connaissances</h2>
+
+      <p>
+        Tu souhaites mesurer la tension d'une source.
+        Quel mode dois-tu sélectionner sur le multimètre ?
+      </p>
+
+      <div class="quiz-options">
+
+        <button
+          class="quiz-button"
+          type="button"
+          data-answer="correct">
+          A. Mode V
+        </button>
+
+        <button
+          class="quiz-button"
+          type="button"
+          data-answer="wrong">
+          B. Mode A
+        </button>
+
+        <button
+          class="quiz-button"
+          type="button"
+          data-answer="wrong">
+          C. Mode Ω
+        </button>
+
+      </div>
+
+      <div
+        id="quizFeedback"
+        class="feedback"
+        aria-live="polite">
+      </div>
+    </section>
+
+    <nav class="lesson-navigation">
+
+      <a
+        class="btn btn-secondary"
+        href="05-alimentation.html">
+        ← Étape 5 : l'alimentation
+      </a>      <a
+        id="nextLesson"
+        class="btn btn-primary next-link"
+        href="07-activite.html">
+        Étape suivante : mini-activité →
+      </a>
+
+    </nav>
+
+  </div>
+</main>
+
+<script>
+  const targetButtons =
+    document.querySelectorAll(".target-button");
+
+  const modeButtons =
+    document.querySelectorAll(".mode-button");
+
+  const targetText =
+    document.getElementById("targetText");
+
+  const screenValue =
+    document.getElementById("screenValue");
+
+  const measurementFeedback =
+    document.getElementById("measurementFeedback");
+
+  let currentTarget = "voltage";
+
+  const targets = {
+    voltage: {
+      label: "mesurer une tension",
+      mode: "voltage",
+      value: "5,00 V"
+    },
+
+    current: {
+      label: "mesurer un courant",
+      mode: "current",
+      value: "0,020 A"
+    },
+
+    resistance: {
+      label: "mesurer une résistance",
+      mode: "resistance",
+      value: "220 Ω"
+    }
+  };
+
+  function resetModes() {
+    modeButtons.forEach(function (button) {
+      button.classList.remove("selected");
+    });
+
+    screenValue.textContent = "?";
+
+    measurementFeedback.className =
+      "measurement-feedback";
+
+    measurementFeedback.textContent =
+      "Choisis le mode de mesure.";
+  }
+
+  targetButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      targetButtons.forEach(function (item) {
+        item.classList.remove("selected");
+      });
+
+      button.classList.add("selected");
+      currentTarget = button.dataset.target;
+      targetText.textContent = targets[currentTarget].label;
+
+      resetModes();
+    });
+  });
+
+  modeButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      modeButtons.forEach(function (item) {
+        item.classList.remove("selected");
+      });
+
+      button.classList.add("selected");
+
+      const selectedMode = button.dataset.mode;
+      const correctMode = targets[currentTarget].mode;
+
+      if (selectedMode === correctMode) {
+        screenValue.textContent =
+          targets[currentTarget].value;
+
+        measurementFeedback.className =
+          "measurement-feedback good";
+
+        measurementFeedback.textContent =
+          "✅ Bon mode ! Le multimètre affiche maintenant une mesure simulée.";
+      } else {
+        screenValue.textContent = "ERR";
+
+        measurementFeedback.className =
+          "measurement-feedback bad";
+
+        measurementFeedback.textContent =
+          "Ce mode ne correspond pas à la grandeur sélectionnée. Essaie un autre mode.";
+      }
+    });
+  });
+
+  const quizButtons =
+    document.querySelectorAll(".quiz-button");
+
+  const quizFeedback =
+    document.getElementById("quizFeedback");
+
+  const nextLesson =
+    document.getElementById("nextLesson");
+
+  quizButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      if (button.dataset.answer === "correct") {
+        quizFeedback.className = "feedback good";
+
+        quizFeedback.textContent =
+          "✅ Bonne réponse ! Le mode V est utilisé ici pour mesurer une tension.";
+
+        nextLesson.classList.add("unlocked");
+      } else {
+        quizFeedback.className = "feedback bad";
+
+        quizFeedback.textContent =
+          "Pas encore. Associe la tension au symbole V puis essaie de nouveau.";
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
+
+    
