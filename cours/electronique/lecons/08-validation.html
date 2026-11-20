@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Étape 8 - Validation finale | DEMI VR PCB</title>
+
+  <link rel="stylesheet" href="../../../style.css">
+
+  <style>
+    .validation-page {
+      padding: 48px 0 80px;
+    }
+
+    .validation-container {
+      width: min(1000px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .validation-back {
+      display: inline-block;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+
+    .validation-hero,
+    .question-card,
+    .final-result {
+      padding: 30px;
+      margin-bottom: 22px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--white);
+    }
+
+    .lesson-label {
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .validation-intro {
+      margin-top: 22px;
+      padding: 20px;
+      border-radius: 18px;
+      background: #eef6ff;
+    }
+
+    .score-area {
+      margin: 26px 0;
+    }
+
+    .score-track {
+      height: 14px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e1e8f0;
+    }
+
+    .score-value {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: #1479ff;
+      transition: width 0.3s ease;
+    }
+
+    .answer-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .answer-button {
+      padding: 14px 16px;
+      text-align: left;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--white);
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .answer-button:hover,
+    .answer-button:focus {
+      border-color: #1479ff;
+    }
+
+}
+.answer-button.correct {
+  color: #126b42;
+  border-color: #5ec290;
+  background: #e8f8ef;
+}
+
+.answer-button.wrong {
+  color: #8b2c2c;
+  border-color: #e49a9a;
+  background: #fff0f0;
+}
+
+.question-feedback {
+  min-height: 24px;
+  margin-top: 14px;
+  font-weight: 700;
+}
+
+.final-result {
+  display: none;
+  text-align: center;
+}
+
+.final-result.visible {
+  display: block;
+}
+
+.final-result.success {
+  background: #e8f8ef;
+}
+
+.badge {
+  display: inline-block;
+  margin: 18px 0;
+  padding: 18px 24px;
+  border: 2px solid #1479ff;
+  border-radius: 18px;
+  background: white;
+  font-weight: 900;
+}
+
+.final-score {
+  display: block;
+  margin: 12px 0;
+  font-size: 2rem;
+  font-weight: 900;
+}.validation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+@media (max-width: 700px) {
+  .validation-hero,
+  .question-card,
+  .final-result {
+    padding: 22px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="../../../index.html">
+      <strong>DEMI VR PCB</strong>
+    </a>
+  </div>
+</header>
+
+<main class="validation-page">
+  <div class="validation-container">
+
+    <a class="validation-back" href="../index.html">
+      ← Retour au parcours Électronique
+    </a>    <section class="validation-hero">
+
+      <p class="lesson-label">
+        Électronique · Niveau 1 · Étape 8/8
+      </p>
+
+      <h1>✅ Validation finale</h1>
+
+      <p>
+        Tu arrives à la dernière étape du parcours.
+        Cette validation reprend les notions essentielles
+        découvertes dans les leçons précédentes.
+      </p>
+
+      <div class="validation-intro">
+        <strong>🎯 Objectif : répondre aux 5 questions.</strong>
+
+        <p>
+          Chaque bonne réponse augmente ton score.
+          Réussis la validation pour terminer le Niveau 1.
+        </p>
+      </div>
+
+      <div class="score-area">
+        <div class="score-track">
+          <div id="scoreValue" class="score-value"></div>
+        </div>
+
+        <p id="scoreText">
+          Score : 0 / 5
+        </p>
+      </div>
+
+    </section>    <section class="question-card" data-question="q1">
+      <h2>Question 1/5 · ⚡ Tension</h2>
+
+      <p>
+        Quelle est l'unité utilisée pour mesurer une tension électrique ?
+      </p>
+
+      <div class="answer-grid">
+        <button class="answer-button" type="button" data-correct="false">
+          A. Ampère
+        </button>
+
+        <button class="answer-button" type="button" data-correct="true">
+          B. Volt
+        </button>
+
+        <button class="answer-button" type="button" data-correct="false">
+          C. Ohm
+        </button>
+      </div>
+
+      <p class="question-feedback"></p>
+    </section>
+
+    <section class="question-card" data-question="q2">
+      <h2>Question 2/5 · 🔄 Courant</h2>
+
+      <p>
+        Quelle est l'unité utilisée pour mesurer l'intensité électrique ?
+      </p>
+
+      <div class="answer-grid">
+        <button class="answer-button" type="button" data-correct="true">
+          A. Ampère
+        </button>
+
+        <button class="answer-button" type="button" data-correct="false">
+          B. Volt
+        </button>
+
+        <button class="answer-button" type="button" data-correct="false">
+          C. Ohm
+        </button>
+      </div>
+
+      <p class="question-feedback"></p>
+    </section>    <section class="question-card" data-question="q3">
+      <h2>Question 3/5 · Ω Résistance</h2>
+
+      <p>
+        À tension constante, que se passe-t-il généralement
+        lorsque la résistance augmente ?
+      </p>
+
+      <div class="answer-grid">
+        <button class="answer-button" type="button" data-correct="false">
+          A. Le courant augmente
+        </button>
+
+        <button class="answer-button" type="button" data-correct="true">
+          B. Le courant diminue
+        </button>
+
+        <button class="answer-button" type="button" data-correct="false">
+          C. La tension devient automatiquement nulle
+        </button>
+      </div>
+
+      <p class="question-feedback"></p>
+    </section>
+
+    <section class="question-card" data-question="q4">
+      <h2>Question 4/5 · 💡 LED</h2>
+
+      <p>
+        Pourquoi utilise-t-on généralement une résistance
+        en série avec une LED ?
+      </p>
+
+      <div class="answer-grid">
+        <button class="answer-button" type="button" data-correct="false">
+          A. Pour transformer la LED en alimentation
+        </button>
+
+        <button class="answer-button" type="button" data-correct="true">
+          B. Pour limiter le courant dans la LED
+        </button>
+
+        <button class="answer-button" type="button" data-correct="false">
+          C. Pour supprimer toute tension
+        </button>
+      </div>
+
+      <p class="question-feedback"></p>
+    </section>    <section class="question-card" data-question="q5">
+      <h2>Question 5/5 · 📏 Multimètre</h2>
+
+      <p>
+        Quel mode du multimètre faut-il sélectionner
+        pour mesurer une tension ?
+      </p>
+
+      <div class="answer-grid">
+        <button class="answer-button"
+                type="button"
+                data-correct="true">
+          A. Mode V
+        </button>
+
+        <button class="answer-button"
+                type="button"
+                data-correct="false">
+          B. Mode A
+        </button>
+
+        <button class="answer-button"
+                type="button"
+                data-correct="false">
+          C. Mode Ω
+        </button>
+      </div>
+
+      <p class="question-feedback"></p>
+    </section>    <section id="finalResult" class="final-result">
+      <h2>🏆 Résultat final</h2>
+
+      <span id="finalScore" class="final-score">
+        0 / 5
+      </span>
+
+      <p id="finalMessage">
+        Termine les cinq questions pour obtenir ton résultat.
+      </p>
+
+      <div id="levelBadge" class="badge" hidden>
+        ⚡ Électronique · Niveau 1 validé
+      </div>
+
+      <div class="validation-actions">
+        <a class="btn btn-secondary" href="07-activite.html">
+          ← Revoir la mini-activité
+        </a>
+
+        <a class="btn btn-primary" href="../index.html">
+          Retour au parcours Électronique
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main><script>
+  const questions =
+    document.querySelectorAll(".question-card");
+
+  const scoreValue =
+    document.getElementById("scoreValue");
+
+  const scoreText =
+    document.getElementById("scoreText");
+
+  const finalResult =
+    document.getElementById("finalResult");
+
+  const finalScore =
+    document.getElementById("finalScore");
+
+  const finalMessage =
+    document.getElementById("finalMessage");
+
+  const levelBadge =
+    document.getElementById("levelBadge");
+
+  const validatedQuestions = new Set();
+
+  function updateScore() {
+    const score = validatedQuestions.size;
+    const percentage = (score / 5) * 100;
+
+    scoreValue.style.width = percentage + "%";
+    scoreText.textContent = "Score : " + score + " / 5";
+
+    if (score === 5) {
+      finalResult.classList.add("visible", "success");
+
+      finalScore.textContent = "5 / 5";
+
+      finalMessage.textContent =
+        "🎉 Bravo ! Tu as validé les notions fondamentales du Niveau 1.";
+
+      levelBadge.hidden = false;
+    }
+  }
+
+  questions.forEach(function (question) {
+    const buttons =
+      question.querySelectorAll(".answer-button");
+
+    const feedback =
+      question.querySelector(".question-feedback");
+
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function () {
+
+        buttons.forEach(function (item) {
+          item.classList.remove("correct", "wrong");
+        });
+
+        if (button.dataset.correct === "true") {
+          button.classList.add("correct");
+
+          feedback.textContent =
+            "✅ Bonne réponse !";
+
+          validatedQuestions.add(
+            question.dataset.question
+          );
+
+          updateScore();
+
+        } else {
+          button.classList.add("wrong");
+
+          feedback.textContent =
+            "Pas encore. Réfléchis à la notion correspondante puis réessaie.";
+        }
+
+      });
+    });
+  });
+
+  updateScore();
+</script>
+
+</body>
+</html>
