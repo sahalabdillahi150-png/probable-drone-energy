@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Électronique - Niveau 1 | DEMI VR PCB</title>
+  <meta name="description"
+        content="Cours d'initiation à l'électronique de la plateforme pédagogique DEMI VR PCB - Calais & Marck.">
+
+  <link rel="stylesheet" href="../../style.css">
+
+  <style>
+    .course-page {
+      padding: 56px 0 80px;
+    }
+
+    .course-container {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .course-back {
+      display: inline-flex;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+
+    .course-hero {
+      padding: 36px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--white);
+      margin-bottom: 32px;
+    }
+
+    .course-hero h1 {
+      margin-bottom: 12px;
+    }
+
+    .course-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .course-badge {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .course-progress {
+      margin: 28px 0 38px;
+    }
+
+    .progress-track {
+      height: 12px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e8eef5;
+    }
+
+    .progress-value {
+      width: 12.5%;
+      height: 100%;
+      background: #1479ff;
+    }
+
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .lesson-card {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--white);
+    }
+
+.lesson-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lesson-card-link:hover,
+.lesson-card-link:focus {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(15, 31, 54, 0.10);
+}
+
+.lesson-card-link:focus {
+  outline: 3px solid #1479ff;
+  outline-offset: 3px;
+}
+
+    .lesson-number {
+      display: inline-block;
+      margin-bottom: 10px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .experiment {
+      margin-top: 36px;
+      padding: 28px;
+      border-radius: 22px;
+      background: #eef6ff;
+    }
+
+    .course-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    @media (max-width: 700px) {
+      .lesson-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .course-hero {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" aria-label="Retour à l'accueil DEMI VR PCB">
+        <strong>DEMI VR PCB</strong>
+      </a>
+    </div>
+  </header>
+
+  <main class="course-page">
+    <div class="course-container">
+
+      <a class="course-back" href="../../index.html">
+        ← Retour à l'accueil
+      </a>
+
+      <section class="course-hero">
+
+        <p><strong>Parcours Électronique · Niveau 1</strong></p>
+
+        <h1>⚡ Les fondamentaux de l'électronique</h1>
+
+        <p>
+          Découvre les notions essentielles qui serviront ensuite à comprendre
+          les circuits, les PCB, les drones et les systèmes énergétiques.
+        </p>
+
+        <div class="course-meta">
+          <span class="course-badge">🟢 Débutant</span>
+          <span class="course-badge">8 étapes</span>
+          <span class="course-badge">Pratique + théorie</span>
+        </div>
+      </section>
+
+      <section class="course-progress">
+        <h2>Ton parcours</h2>
+
+        <div class="progress-track"
+             role="progressbar"
+             aria-valuemin="0"
+             aria-valuemax="100"
+             aria-valuenow="12">
+          <div class="progress-value"></div>
+        </div>
+
+        <p>Étape 1 sur 8</p>
+      </section>
+
+      <section>
+        <h2>Programme du cours</h2>
+
+        <div class="lesson-grid">
+
+<a href="lecons/01-tension.html"
+   class="lesson-card lesson-card-link">
+  <span class="lesson-number">Étape 1</span>
+  <h3>⚡ La tension</h3>
+  <p>
+    Comprendre la différence de potentiel électrique et découvrir
+    pourquoi la tension se mesure en volts.
+  </p>
+  <strong>Commencer la leçon →</strong>
+</a>
+
+          <a href="lecons/02-courant.html"
+   class="lesson-card lesson-card-link">
+  <span class="lesson-number">Étape 2</span>
+  <h3>🔄 Le courant</h3>
+  <p>
+    Comprendre la circulation du courant électrique et son unité :
+    l'ampère.
+  </p>
+  <strong>Continuer le parcours →</strong>
+</a>
+
+         <a href="lecons/03-resistance.html"
+   class="lesson-card lesson-card-link">
+  <span class="lesson-number">Étape 3</span>
+  <h3>Ω La résistance</h3>
+  <p>
+    Découvrir le rôle d'une résistance et son utilisation pour
+    limiter le courant dans un circuit.
+  </p>
+  <strong>Continuer le parcours →</strong>
+</a>
+
+         <a href="lecons/04-led.html"
+   class="lesson-card lesson-card-link">
+  <span class="lesson-number">Étape 4</span>
+  <h3>💡 La LED</h3>
+  <p>
+    Identifier l'anode et la cathode et comprendre comment protéger
+    une LED avec une résistance.
+  </p>
+  <strong>Continuer le parcours →</strong>
+</a>
+
+         <a href="lecons/05-alimentation.html"
+   class="lesson-card lesson-card-link">
+  <span class="lesson-number">Étape 5</span>
+  <h3>🔋 L'alimentation</h3>
+  <p>
+    Comprendre comment une pile, une batterie ou une alimentation
+    fournit l'énergie nécessaire au circuit.
+  </p>
+  <strong>Continuer le parcours →</strong>
+</a>
+
+         <a href="lecons/06-multimetre.html"
+   class="lesson-card lesson-card-link">
+  <span class="lesson-number">Étape 6</span>
+  <h3>📏 Le multimètre</h3>
+  <p>
+    Découvrir les mesures de base : tension, résistance et
+    courant.
+  </p>
+  <strong>Continuer le parcours →</strong>
+</a>
+
+          <a href="lecons/07-activite.html"
+   class="lesson-card lesson-card-link">
+  <span class="lesson-number">Étape 7</span>
+  <h3>🧪 Mini-activité</h3>
+  <p>
+    Mettre en pratique les notions précédentes avec un circuit
+    simple composé d'une alimentation, d'une résistance et
+    d'une LED.
+  </p>
+  <strong>Lancer la mission →</strong>
+</a>
+
+          <a href="lecons/08-validation.html"
+   class="lesson-card lesson-card-link">
+  <span class="lesson-number">Étape 8</span>
+  <h3>✅ Validation</h3>
+  <p>
+    Vérifier les connaissances acquises avant de passer au prochain
+    niveau et au parcours PCB / SMT.
+  </p>
+  <strong>Passer la validation finale →</strong>
+</a>
+
+        </div>
+      </section>
+
+      <section class="experiment">
+        <h2>🧪 Objectif pratique</h2>
+
+        <p>
+          À la fin de ce niveau, l'apprenant doit pouvoir reconnaître les
+          principaux éléments d'un circuit simple et expliquer leur rôle.
+        </p>
+
+        <div class="course-actions">
+          <a href="../../index.html#parcours" class="btn btn-secondary">
+            Voir le parcours
+          </a>
+
+          <a href="../../index.html#demo" class="btn btn-primary">
+            Explorer la démo VR
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+</body>
+</html>
