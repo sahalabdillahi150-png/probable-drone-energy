@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Étape 3 - La résistance | DEMI VR PCB</title>
+
+  <link rel="stylesheet" href="../../../style.css">
+
+  <style>
+    .lesson-page {
+      padding: 48px 0 80px;
+    }
+
+    .lesson-container {
+      width: min(1000px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .lesson-back {
+      display: inline-block;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+
+    .lesson-hero,
+    .lesson-block,
+    .activity {
+      padding: 30px;
+      margin-bottom: 22px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--white);
+    }
+
+    .lesson-label {
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .lesson-hero h1 {
+      margin: 8px 0 12px;
+    }
+
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .concept-card {
+      padding: 20px;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+    }
+
+    .concept-card strong {
+      display: block;
+      margin: 8px 0;
+      font-size: 1.35rem;
+    }
+
+    .formula {
+      margin: 24px 0;
+      padding: 22px;
+      text-align: center;
+      border-radius: 18px;
+      background: #eef6ff;
+    }
+
+    .formula strong {
+      display: block;
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .activity {
+      background: #eef6ff;
+    }
+
+    .activity label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 800;
+    }
+
+    #resistanceSlider {
+      width: 100%;
+      margin: 14px 0 20px;
+    }
+
+    .simulation-result {
+      padding: 22px;
+      border-radius: 18px;
+      background: white;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .result-item {
+      padding: 16px;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+
+    .result-item strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 1.25rem;
+    }
+
+    .current-track {
+      height: 18px;
+      margin-top: 20px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e0e7ef;
+    }
+
+    .current-level {
+      height: 100%;
+      border-radius: inherit;
+      background: #1479ff;
+      transition: width 0.25s ease;
+    }
+
+    .observation {
+      margin-top: 14px;
+      font-weight: 700;
+    }
+
+    .quiz-options {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .quiz-button {
+      padding: 14px 16px;
+      text-align: left;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--white);
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .quiz-button:hover,
+    .quiz-button:focus {
+      border-color: #1479ff;
+    }
+
+    .feedback {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 14px;
+      font-weight: 700;
+    }
+
+    .feedback.good {
+      display: block;
+      color: #126b42;
+      background: #e8f8ef;
+    }
+
+    .feedback.bad {
+      display: block;
+      color: #8b2c2c;
+      background: #fff0f0;
+    }
+
+    .lesson-navigation {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .next-link {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .next-link.unlocked {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @media (max-width: 700px) {
+      .concept-grid,
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-hero,
+      .lesson-block,
+      .activity {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="../../../index.html">
+      <strong>DEMI VR PCB</strong>
+    </a>
+  </div>
+</header>
+
+<main class="lesson-page">
+  <div class="lesson-container">
+
+    <a class="lesson-back" href="../index.html">
+      ← Retour au parcours Électronique
+    </a>
+
+    <section class="lesson-hero">
+      <p class="lesson-label">
+        Électronique · Niveau 1 · Étape 3/8
+      </p>
+
+      <h1>Ω La résistance</h1>
+
+      <p>
+        Une résistance est un composant qui s'oppose au passage du
+        courant électrique.
+      </p>
+
+      <p>
+        Sa valeur se mesure en <strong>ohms</strong>, avec le symbole
+        <strong>Ω</strong>.
+      </p>
+    </section>
+
+    <section class="lesson-block">
+      <h2>👀 Comprendre</h2>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          ⚡
+          <strong>U</strong>
+          <span>Tension en volts</span>
+        </div>
+
+        <div class="concept-card">
+          Ω
+          <strong>R</strong>
+          <span>Résistance en ohms</span>
+        </div>
+
+        <div class="concept-card">
+          🔄
+          <strong>I</strong>
+          <span>Intensité en ampères</span>
+        </div>
+      </div>
+
+      <div class="formula">
+        <strong>U = R × I</strong>
+        <span>C'est la loi d'Ohm.</span>
+      </div>
+
+      <p>
+        Si la tension reste identique et que la résistance augmente,
+        le courant diminue.
+      </p>
+    </section>
+
+    <section class="activity">
+      <h2>🧪 Expérimenter</h2>
+
+      <p>
+        La tension est fixée à <strong>5 V</strong>. Déplace le curseur
+        pour modifier la résistance et observe le courant calculé.
+      </p>
+
+      <label for="resistanceSlider">
+        Résistance :
+        <span id="resistanceLabel">220 Ω</span>
+      </label>
+
+      <input
+        id="resistanceSlider"
+        type="range"
+        min="100"
+        max="1000"
+        step="20"
+        value="220">
+
+      <div class="simulation-result">
+        <div class="result-grid">
+
+          <div class="result-item">
+            Tension
+            <strong>5 V</strong>
+          </div>
+
+          <div class="result-item">
+            Résistance
+            <strong id="resistanceValue">220 Ω</strong>
+          </div>
+
+          <div class="result-item">
+            Courant calculé
+            <strong id="currentValue">22,7 mA</strong>
+          </div>
+
+        </div>
+
+        <div class="current-track">
+          <div
+            id="currentLevel"
+            class="current-level">
+          </div>
+        </div>
+
+        <p
+          id="observation"
+          class="observation"
+          aria-live="polite">
+        </p>
+      </div>
+    </section>
+
+    <section class="lesson-block">
+      <h2>🧠 À retenir</h2>
+
+      <ul>
+        <li>La résistance se mesure en ohms (Ω).</li>
+        <li>La résistance limite le courant.</li>
+        <li>La tension, la résistance et le courant sont liés.</li>
+        <li>La loi d'Ohm s'écrit U = R × I.</li>
+        <li>À tension constante, plus R augmente, plus I diminue.</li>
+      </ul>
+    </section>
+
+    <section class="lesson-block">
+      <h2>❓ Vérifie tes connaissances</h2>
+
+      <p>
+        À tension constante, que se passe-t-il généralement lorsque
+        la résistance augmente ?
+      </p>
+
+      <div class="quiz-options">
+
+        <button
+          class="quiz-button"
+          type="button"
+          data-answer="wrong">
+          A. Le courant augmente
+        </button>
+
+        <button
+          class="quiz-button"
+          type="button"
+          data-answer="correct">
+          B. Le courant diminue
+        </button>
+
+        <button
+          class="quiz-button"
+          type="button"
+          data-answer="wrong">
+          C. La tension devient automatiquement nulle
+        </button>
+
+      </div>
+
+      <div
+        id="quizFeedback"
+        class="feedback"
+        aria-live="polite">
+      </div>
+    </section>
+
+    <nav class="lesson-navigation">
+
+      <a
+        class="btn btn-secondary"
+        href="02-courant.html">
+        ← Étape 2 : le courant
+      </a>
+
+      <a
+        id="nextLesson"
+        class="btn btn-primary next-link"
+        href="04-led.html">
+        Étape suivante : la LED →
+      </a>
+
+    </nav>
+
+  </div>
+</main>
+
+<script>
+  const voltage = 5;
+
+  const resistanceSlider =
+    document.getElementById("resistanceSlider");
+
+  const resistanceLabel =
+    document.getElementById("resistanceLabel");
+
+  const resistanceValue =
+    document.getElementById("resistanceValue");
+
+  const currentValue =
+    document.getElementById("currentValue");
+
+  const currentLevel =
+    document.getElementById("currentLevel");
+
+  const observation =
+    document.getElementById("observation");
+
+  function updateSimulation() {
+    const resistance = Number(resistanceSlider.value);
+
+    const currentAmp = voltage / resistance;
+    const currentMilliamp = currentAmp * 1000;
+
+    resistanceLabel.textContent = resistance + " Ω";
+    resistanceValue.textContent = resistance + " Ω";
+
+    currentValue.textContent =
+      currentMilliamp.toLocaleString(
+        "fr-FR",
+        {
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 1
+        }
+      ) + " mA";
+
+    const maximumCurrent = (voltage / 100) * 1000;
+    const percentage =
+      Math.min(100, (currentMilliamp / maximumCurrent) * 100);
+
+    currentLevel.style.width = percentage + "%";
+
+    if (resistance <= 300) {
+      observation.textContent =
+        "Résistance faible : le courant calculé est plus important.";
+    } else if (resistance <= 600) {
+      observation.textContent =
+        "Résistance intermédiaire : le courant diminue.";
+    } else {
+      observation.textContent =
+        "Résistance élevée : le courant calculé devient plus faible.";
+    }
+  }
+
+  resistanceSlider.addEventListener(
+    "input",
+    updateSimulation
+  );
+
+  updateSimulation();
+
+  const quizButtons =
+    document.querySelectorAll(".quiz-button");
+
+  const feedback =
+    document.getElementById("quizFeedback");
+
+  const nextLesson =
+    document.getElementById("nextLesson");
+
+  quizButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+
+      if (button.dataset.answer === "correct") {
+        feedback.className = "feedback good";
+
+        feedback.textContent =
+          "✅ Bonne réponse ! À tension constante, augmenter la résistance réduit le courant.";
+
+        nextLesson.classList.add("unlocked");
+
+      } else {
+        feedback.className = "feedback bad";
+
+        feedback.textContent =
+          "Pas encore. Observe la simulation puis relis la section « À retenir ».";
+      }
+
+    });
+  });
+</script>
+
+</body>
+</html>
