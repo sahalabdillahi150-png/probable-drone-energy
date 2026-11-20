@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Étape 4 - La LED | DEMI VR PCB</title>
+
+  <link rel="stylesheet" href="../../../style.css">
+
+  <style>
+    .lesson-page {
+      padding: 48px 0 80px;
+    }
+
+    .lesson-container {
+      width: min(1000px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .lesson-back {
+      display: inline-block;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+
+    .lesson-hero,
+    .lesson-block,
+    .activity {
+      padding: 30px;
+      margin-bottom: 22px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--white);
+    }
+
+    .lesson-label {
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .polarity-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .polarity-card {
+      padding: 22px;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+    }
+
+    .polarity-symbol {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 2rem;
+    }
+
+    .activity {
+      background: #eef6ff;
+    }
+
+    .circuit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 24px;
+      margin: 22px 0;
+      border-radius: 18px;
+      background: white;
+    }
+
+    .circuit-item {
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      font-weight: 800;
+    }
+
+    .circuit-arrow {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .led-display {
+      display: flex;
+      justify-content: center;
+      margin: 28px 0;
+    }
+
+    .led-light {
+      width: 110px;
+      height: 110px;
+      border: 8px solid #d7dee8;
+      border-radius: 50%;
+      background: #ff4545;
+      box-shadow: 0 0 15px rgba(255, 69, 69, 0.25);
+      transition:
+        opacity 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+    }
+
+    .control-group {
+      margin-top: 22px;
+    }
+
+    .control-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 800;
+    }
+
+    #resistanceSlider {
+      width: 100%;
+    }
+
+    .simulation-result {
+      margin-top: 24px;
+      padding: 20px;
+      border-radius: 18px;
+      background: white;
+    }
+
+    .simulation-result strong {
+      font-size: 1.2rem;
+    }
+
+    .warning {
+      margin-top: 12px;
+      font-weight: 700;
+    }
+
+    .quiz-options {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .quiz-button {
+      padding: 14px 16px;
+      text-align: left;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--white);
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .quiz-button:hover,
+    .quiz-button:focus {
+      border-color: #1479ff;
+    }
+
+    .feedback {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 14px;
+      font-weight: 700;
+    }
+
+    .feedback.good {
+      display: block;
+      color: #126b42;
+      background: #e8f8ef;
+    }
+
+    .feedback.bad {
+      display: block;
+      color: #8b2c2c;
+      background: #fff0f0;
+    }
+
+    .lesson-navigation {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .next-link {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .next-link.unlocked {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @media (max-width: 700px) {
+      .polarity-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-hero,
+      .lesson-block,
+      .activity {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="../../../index.html">
+      <strong>DEMI VR PCB</strong>
+    </a>
+  </div>
+</header>
+
+<main class="lesson-page">
+  <div class="lesson-container">
+
+    <a class="lesson-back" href="../index.html">
+      ← Retour au parcours Électronique
+    </a>
+
+    <section class="lesson-hero">
+      <p class="lesson-label">
+        Électronique · Niveau 1 · Étape 4/8
+      </p>
+
+      <h1>💡 La LED</h1>
+
+      <p>
+        Une LED est une diode électroluminescente :
+        elle produit de la lumière lorsqu'elle est correctement alimentée.
+      </p>
+
+      <p>
+        Contrairement à une résistance classique, une LED possède
+        un <strong>sens de branchement</strong>.
+      </p>
+    </section>
+
+    <section class="lesson-block">
+      <h2>👀 Comprendre la polarité</h2>
+
+      <div class="polarity-grid">
+
+        <div class="polarity-card">
+          <span class="polarity-symbol">＋</span>
+          <strong>Anode</strong>
+          <p>Côté positif de la LED.</p>
+        </div>
+
+        <div class="polarity-card">
+          <span class="polarity-symbol">−</span>
+          <strong>Cathode</strong>
+          <p>Côté négatif de la LED.</p>
+        </div>
+
+      </div>
+
+      <p>
+        Dans notre simulation pédagogique, la LED est branchée
+        dans le bon sens.
+      </p>
+    </section>
+
+    <section class="activity">
+      <h2>🧪 Expérimenter</h2>
+
+      <p>
+        La source fournit <strong>5 V</strong> et la LED de cette
+        simulation est modélisée avec une tension directe de
+        <strong>2 V</strong>.
+      </p>
+
+      <div class="circuit">
+        <span class="circuit-item">🔋 5 V</span>
+        <span class="circuit-arrow">→</span>
+        <span class="circuit-item">Ω Résistance</span>
+        <span class="circuit-arrow">→</span>
+        <span class="circuit-item">💡 LED</span>
+      </div>
+
+      <div class="led-display">
+        <div
+          id="ledLight"
+          class="led-light"
+          aria-label="Simulation visuelle de la LED">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label for="resistanceSlider">
+          Résistance :
+          <span id="resistanceLabel">220 Ω</span>
+        </label>
+
+        <input
+          id="resistanceSlider"
+          type="range"
+          min="100"
+          max="1000"
+          step="20"
+          value="220">
+      </div>
+
+      <div class="simulation-result">
+        Courant simulé :
+        <strong id="currentValue">13,6 mA</strong>
+
+        <p
+          id="simulationMessage"
+          class="warning"
+          aria-live="polite">
+        </p>
+      </div>
+    </section>
+
+    <section class="lesson-block">
+      <h2>🧠 À retenir</h2>
+
+      <ul>
+        <li>Une LED possède une anode et une cathode.</li>
+        <li>Une LED doit être branchée dans le bon sens.</li>
+        <li>Une résistance permet de limiter le courant.</li>
+        <li>La résistance contribue à protéger la LED.</li>
+        <li>Le choix des valeurs dépend du circuit utilisé.</li>
+      </ul>
+    </section>
+
+    <section class="lesson-block">
+      <h2>❓ Vérifie tes connaissances</h2>
+
+      <p>
+        Pourquoi utilise-t-on généralement une résistance
+        en série avec une LED ?
+      </p>
+
+      <div class="quiz-options">
+
+        <button
+          class="quiz-button"
+          type="button"
+          data-answer="wrong">
+          A. Pour transformer la LED en batterie
+        </button>
+
+        <button
+          class="quiz-button"
+          type="button"
+          data-answer="correct">
+          B. Pour limiter le courant dans la LED
+        </button>
+
+        <button
+          class="quiz-button"
+          type="button"
+          data-answer="wrong">
+          C. Pour supprimer toute tension du circuit
+        </button>
+
+      </div>
+
+      <div
+        id="quizFeedback"
+        class="feedback"
+        aria-live="polite">
+      </div>
+    </section>
+
+    <nav class="lesson-navigation">
+
+      <a class="btn btn-secondary"
+         href="03-resistance.html">
+        ← Étape 3 : la résistance
+      </a>
+
+      <a id="nextLesson"
+         class="btn btn-primary next-link"
+         href="05-alimentation.html">
+        Étape suivante : l'alimentation →
+      </a>
+
+    </nav>
+
+  </div>
+</main>
+
+<script>
+  const supplyVoltage = 5;
+  const ledVoltage = 2;
+
+  const resistanceSlider =
+    document.getElementById("resistanceSlider");
+
+  const resistanceLabel =
+    document.getElementById("resistanceLabel");
+
+  const currentValue =
+    document.getElementById("currentValue");
+
+  const ledLight =
+    document.getElementById("ledLight");
+
+  const simulationMessage =
+    document.getElementById("simulationMessage");
+
+  function updateLedSimulation() {
+    const resistance = Number(resistanceSlider.value);
+
+    const currentAmp =
+      (supplyVoltage - ledVoltage) / resistance;
+
+    const currentMilliamp =
+      Math.max(0, currentAmp * 1000);
+
+    resistanceLabel.textContent =
+      resistance + " Ω";
+
+    currentValue.textContent =
+      currentMilliamp.toLocaleString(
+        "fr-FR",
+        {
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 1
+        }
+      ) + " mA";
+
+    const brightness =
+      Math.min(1, currentMilliamp / 20);
+
+    ledLight.style.opacity =
+      String(0.25 + brightness * 0.75);
+
+    ledLight.style.transform =
+      "scale(" + (0.9 + brightness * 0.1) + ")";
+
+    ledLight.style.boxShadow =
+      "0 0 " +
+      Math.round(10 + brightness * 45) +
+      "px rgba(255, 69, 69, " +
+      (0.25 + brightness * 0.55) +
+      ")";
+
+    if (currentMilliamp > 20) {
+      simulationMessage.textContent =
+        "⚠️ Courant élevé dans cette simulation : augmente la résistance.";
+    } else if (currentMilliamp >= 8) {
+      simulationMessage.textContent =
+        "✅ Zone pédagogique : le courant simulé est modéré.";
+    } else {
+      simulationMessage.textContent =
+        "💡 Courant faible : la LED simulée apparaît moins lumineuse.";
+    }
+  }
+
+  resistanceSlider.addEventListener(
+    "input",
+    updateLedSimulation
+  );
+
+  updateLedSimulation();
+
+  const quizButtons =
+    document.querySelectorAll(".quiz-button");
+
+  const feedback =
+    document.getElementById("quizFeedback");
+
+  const nextLesson =
+    document.getElementById("nextLesson");
+
+  quizButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+
+      if (button.dataset.answer === "correct") {
+
+        feedback.className = "feedback good";
+
+        feedback.textContent =
+          "✅ Bonne réponse ! La résistance limite le courant qui traverse la LED.";
+
+        nextLesson.classList.add("unlocked");
+
+      } else {
+
+        feedback.className = "feedback bad";
+
+        feedback.textContent =
+          "Pas encore. Relis la partie « À retenir » puis essaie de nouveau.";
+      }
+
+    });
+  });
+</script>
+
+</body>
+</html>
