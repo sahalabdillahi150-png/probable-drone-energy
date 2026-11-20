@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Étape 5 - L'alimentation | DEMI VR PCB</title>
+
+  <link rel="stylesheet" href="../../../style.css">
+
+  <style>
+    .lesson-page {
+      padding: 48px 0 80px;
+    }
+
+    .lesson-container {
+      width: min(1000px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .lesson-back {
+      display: inline-block;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+
+    .lesson-hero,
+    .lesson-block,
+    .activity {
+      padding: 30px;
+      margin-bottom: 22px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--white);
+    }
+
+    .lesson-label {
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .source-card {
+      padding: 20px;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+    }
+
+    .source-card strong {
+      display: block;
+      margin: 8px 0;
+      font-size: 1.35rem;
+    }
+
+    .activity {
+      background: #eef6ff;
+    }
+
+    .target-circuit {
+      padding: 22px;
+      margin: 20px 0;
+      text-align: center;
+      border-radius: 18px;
+      background: white;
+    }
+
+    .target-circuit strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 1.4rem;
+    }
+
+    .voltage-options {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .voltage-button {
+      padding: 14px 10px;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: white;
+      font: inherit;
+      font-weight: 800;
+    }
+
+    .voltage-button:hover,
+    .voltage-button:focus {
+      border-color: #1479ff;
+    }
+
+    .voltage-button.selected {
+      color: white;
+      border-color: #1479ff;
+      background: #1479ff;
+    }
+
+    .diagnostic {
+      min-height: 100px;
+      padding: 20px;
+      border-radius: 18px;
+      background: white;
+    }
+
+    .diagnostic strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.2rem;
+    }
+
+    .diagnostic.good {
+      color: #126b42;
+      background: #e8f8ef;
+    }
+
+    .diagnostic.low {
+      color: #765800;
+      background: #fff8db;
+    }
+
+    .diagnostic.high {
+      color: #8b2c2c;
+      background: #fff0f0;
+    }
+
+    .quiz-options {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .quiz-button {
+      padding: 14px 16px;
+      text-align: left;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--white);
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .feedback {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 14px;
+      font-weight: 700;
+    }
+
+    .feedback.good {
+      display: block;
+      color: #126b42;
+      background: #e8f8ef;
+    }
+
+    .feedback.bad {
+      display: block;
+      color: #8b2c2c;
+      background: #fff0f0;
+    }
+
+    .lesson-navigation {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .next-link {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .next-link.unlocked {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @media (max-width: 700px) {
+      .source-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .voltage-options {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .lesson-hero,
+      .lesson-block,
+      .activity {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="../../../index.html">
+      <strong>DEMI VR PCB</strong>
+    </a>
+  </div>
+</header>
+
+<main class="lesson-page">
+  <div class="lesson-container">
+
+    <a class="lesson-back" href="../index.html">
+      ← Retour au parcours Électronique
+    </a>
+
+    <section class="lesson-hero">
+      <p class="lesson-label">
+        Électronique · Niveau 1 · Étape 5/8
+      </p>
+
+      <h1>🔋 L'alimentation</h1>
+
+      <p>
+        L'alimentation fournit l'énergie électrique nécessaire
+        au fonctionnement d'un circuit.
+      </p>
+
+      <p>
+        Une source doit notamment fournir une
+        <strong>tension adaptée au circuit</strong>.
+      </p>
+    </section>
+
+    <section class="lesson-block">
+      <h2>👀 Comparer des sources</h2>
+
+      <div class="source-grid">
+
+        <div class="source-card">
+          🔋
+          <strong>1,5 V</strong>
+          <span>Pile</span>
+        </div>
+
+        <div class="source-card">
+          🔌
+          <strong>5 V</strong>
+          <span>Alimentation basse tension</span>
+        </div>
+
+        <div class="source-card">
+          ⚙️
+          <strong>12 V</strong>
+          <span>Autre niveau d'alimentation</span>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="activity">
+      <h2>🧪 Choisis l'alimentation</h2>
+
+      <p>
+        Pour cette activité pédagogique, le circuit est prévu
+        pour fonctionner sous <strong>5 V</strong>.
+      </p>
+
+      <div class="target-circuit">
+        Circuit pédagogique
+        <strong>⚡ Tension attendue : 5 V</strong>
+      </div>
+
+      <p><strong>Quelle tension veux-tu essayer ?</strong></p>
+
+      <div class="voltage-options">
+        <button class="voltage-button" type="button" data-voltage="1.5">
+          1,5 V
+        </button>
+
+        <button class="voltage-button" type="button" data-voltage="3.3">
+          3,3 V
+        </button>
+
+        <button class="voltage-button" type="button" data-voltage="5">
+          5 V
+        </button>
+
+        <button class="voltage-button" type="button" data-voltage="9">
+          9 V
+        </button>
+
+        <button class="voltage-button" type="button" data-voltage="12">
+          12 V
+        </button>
+      </div>
+
+      <div
+        id="diagnostic"
+        class="diagnostic"
+        aria-live="polite">
+        Sélectionne une tension pour commencer l'expérience.
+      </div>
+    </section>
+    <section class="lesson-block">
+      <h2>🧠 À retenir</h2>
+
+      <ul>
+        <li>Une alimentation fournit l'énergie nécessaire au circuit.</li>
+        <li>La tension d'alimentation doit être adaptée au circuit.</li>
+        <li>Une tension trop faible peut empêcher le fonctionnement prévu.</li>
+        <li>Une tension trop élevée peut être inadaptée au circuit.</li>
+        <li>Il faut vérifier les caractéristiques du circuit avant de l'alimenter.</li>
+      </ul>
+    </section>
+
+    <section class="lesson-block">
+      <h2>❓ Vérifie tes connaissances</h2>
+
+      <p>
+        Dans cette activité, le circuit est prévu pour fonctionner sous 5 V.
+        Quelle alimentation faut-il sélectionner ?
+      </p>
+
+      <div class="quiz-options">
+
+        <button
+          class="quiz-button"
+          type="button"
+          data-answer="wrong">
+          A. 1,5 V
+        </button>
+
+        <button
+          class="quiz-button"
+          type="button"
+          data-answer="correct">
+          B. 5 V
+        </button>
+
+        <button
+          class="quiz-button"
+          type="button"
+          data-answer="wrong">
+          C. 12 V
+        </button>
+
+      </div>
+
+      <div
+        id="quizFeedback"
+        class="feedback"
+        aria-live="polite">
+      </div>
+    </section>
+
+    <nav class="lesson-navigation">
+
+      <a
+        class="btn btn-secondary"
+        href="04-led.html">
+        ← Étape 4 : la LED
+      </a>
+
+      <a
+        id="nextLesson"
+        class="btn btn-primary next-link"
+        href="06-multimetre.html">
+        Étape suivante : le multimètre →
+      </a>
+
+    </nav>
+
+  </div>
+</main>
+
+<script>
+  const voltageButtons =
+    document.querySelectorAll(".voltage-button");
+
+  const diagnostic =
+    document.getElementById("diagnostic");
+
+  voltageButtons.forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+      voltageButtons.forEach(function (item) {
+        item.classList.remove("selected");
+      });
+
+      button.classList.add("selected");
+
+      const voltage = Number(button.dataset.voltage);
+
+      if (voltage === 5) {
+
+        diagnostic.className = "diagnostic good";
+
+        diagnostic.innerHTML =
+          "<strong>✅ Tension adaptée : 5 V</strong>" +
+          "Dans cette activité, la source correspond à la tension prévue pour le circuit.";
+
+      } else if (voltage < 5) {
+
+        diagnostic.className = "diagnostic low";
+
+        diagnostic.innerHTML =
+          "<strong>⚠️ Tension inférieure à la valeur prévue</strong>" +
+          voltage.toLocaleString("fr-FR") +
+          " V est inférieur aux 5 V attendus par ce circuit pédagogique.";
+
+      } else {
+
+        diagnostic.className = "diagnostic high";
+
+        diagnostic.innerHTML =
+          "<strong>⚠️ Tension supérieure à la valeur prévue</strong>" +
+          voltage.toLocaleString("fr-FR") +
+          " V est supérieur aux 5 V attendus par ce circuit pédagogique.";
+      }
+
+    });
+
+  });
+
+  const quizButtons =
+    document.querySelectorAll(".quiz-button");
+
+  const feedback =
+    document.getElementById("quizFeedback");
+
+  const nextLesson =
+    document.getElementById("nextLesson");
+
+  quizButtons.forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+      if (button.dataset.answer === "correct") {
+
+        feedback.className = "feedback good";
+
+        feedback.textContent =
+          "✅ Bonne réponse ! Pour cette activité, le circuit est prévu pour une alimentation de 5 V.";
+
+        nextLesson.classList.add("unlocked");
+
+      } else {
+
+        feedback.className = "feedback bad";
+
+        feedback.textContent =
+          "Pas encore. Vérifie la tension attendue par le circuit puis essaie de nouveau.";
+      }
+
+    });
+
+  });
+</script>
+
+</body>
+</html>
