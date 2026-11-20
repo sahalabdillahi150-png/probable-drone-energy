@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Étape 7 - Mini-activité | DEMI VR PCB</title>
+
+  <link rel="stylesheet" href="../../../style.css">
+
+  <style>
+    .lesson-page {
+      padding: 48px 0 80px;
+    }
+
+    .lesson-container {
+      width: min(1000px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .lesson-back {
+      display: inline-block;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+
+    .lesson-hero,
+    .mission-block,
+    .result-block {
+      padding: 30px;
+      margin-bottom: 22px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--white);
+    }
+
+    .lesson-label {
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .mission-intro {
+      padding: 22px;
+      margin-top: 22px;
+      border-radius: 18px;
+      background: #eef6ff;
+    }
+
+    .mission-progress {
+      margin: 28px 0;
+    }
+
+    .progress-track {
+      height: 14px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e1e8f0;
+    }
+
+    .progress-value {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: #1479ff;
+      transition: width 0.3s ease;
+    }
+
+    .challenge {
+      padding: 24px;
+      margin-bottom: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--white);
+    }
+
+    .challenge h3 {
+      margin-top: 0;
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .choice-button {
+      padding: 14px;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: white;
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .choice-button:hover,
+    .choice-button:focus {
+      border-color: #1479ff;
+    }
+
+    .choice-button.correct {
+      color: #126b42;
+      border-color: #5ec290;
+      background: #e8f8ef;
+    }
+
+    .choice-button.wrong {
+      color: #8b2c2c;
+      border-color: #e49a9a;
+      background: #fff0f0;
+    }
+
+    .challenge-feedback {
+      min-height: 24px;
+      margin-top: 14px;
+      font-weight: 700;
+    }
+
+    .result-block {
+      display: none;
+      text-align: center;
+      background: #e8f8ef;
+    }
+
+    .result-block.visible {
+      display: block;
+    }
+
+    .result-score {
+      display: block;
+      margin: 12px 0;
+      font-size: 2rem;
+      font-weight: 900;
+      color: #126b42;
+    }
+
+    .lesson-navigation {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .next-link {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .next-link.unlocked {
+      opacity: 1;
+       pointer-events: auto;
+}
+
+@media (max-width: 700px) {
+  .choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lesson-hero,
+  .mission-block,
+  .result-block {
+    padding: 22px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="../../../index.html">
+      <strong>DEMI VR PCB</strong>
+    </a>
+  </div>
+</header>
+
+<main class="lesson-page">
+  <div class="lesson-container">
+
+    <a class="lesson-back" href="../index.html">
+      ← Retour au parcours Électronique
+    </a>
+
+    <section class="lesson-hero">
+      <p class="lesson-label">
+        Électronique · Niveau 1 · Étape 7/8
+      </p>
+
+      <h1>🧪 Mini-activité</h1>
+
+      <p>
+        Tu as découvert les bases de l'électronique.
+        Il est maintenant temps de les réunir dans une petite mission.
+      </p>
+
+      <div class="mission-intro">
+        <strong>🎯 Mission : préparer un petit circuit LED pédagogique.</strong>
+
+        <p>
+          Réponds correctement aux quatre décisions pour terminer
+          la préparation du circuit.
+        </p>
+      </div>
+    </section>    <section class="mission-block">
+
+      <h2>Progression de la mission</h2>
+
+      <div class="mission-progress">
+        <div class="progress-track">
+          <div id="progressValue" class="progress-value"></div>
+        </div>
+
+        <p id="progressText">0 étape validée sur 4</p>
+      </div>
+
+      <article class="challenge" data-challenge="power">
+        <h3>1. 🔋 Choisir l'alimentation</h3>
+
+        <p>
+          Le circuit pédagogique est prévu pour fonctionner sous 5 V.
+          Quelle alimentation choisis-tu ?
+        </p>
+
+        <div class="choice-grid">
+          <button class="choice-button" type="button" data-correct="false">
+            1,5 V
+          </button>
+
+          <button class="choice-button" type="button" data-correct="true">
+            5 V
+          </button>
+
+          <button class="choice-button" type="button" data-correct="false">
+            12 V
+          </button>
+        </div>
+
+        <p class="challenge-feedback"></p>
+      </article>
+
+      <article class="challenge" data-challenge="resistor">
+        <h3>2. Ω Protéger la LED</h3>
+
+        <p>
+          Quel composant utilise-t-on pour limiter le courant
+          dans notre circuit LED pédagogique ?
+        </p>
+
+        <div class="choice-grid">
+          <button class="choice-button" type="button" data-correct="false">
+            Une seconde LED
+          </button>
+
+          <button class="choice-button" type="button" data-correct="true">
+            Une résistance
+          </button>
+
+          <button class="choice-button" type="button" data-correct="false">
+            Un interrupteur seul
+          </button>
+        </div>
+
+        <p class="challenge-feedback"></p>
+</article>      <article class="challenge" data-challenge="polarity">
+        <h3>3. 💡 Vérifier la LED</h3>
+
+        <p>
+          La LED possède-t-elle un sens de branchement ?
+        </p>
+
+        <div class="choice-grid">
+          <button class="choice-button"
+                  type="button"
+                  data-correct="true">
+            Oui
+          </button>
+
+          <button class="choice-button"
+                  type="button"
+                  data-correct="false">
+            Non
+          </button>
+
+          <button class="choice-button"
+                  type="button"
+                  data-correct="false">
+            Seulement en VR
+          </button>
+        </div>
+
+        <p class="challenge-feedback"></p>
+      </article>      <article class="challenge" data-challenge="meter">
+        <h3>4. 📏 Vérifier la tension</h3>
+
+        <p>
+          Quel mode du multimètre sélectionnes-tu
+          pour mesurer la tension ?
+        </p>
+
+        <div class="choice-grid">
+          <button class="choice-button"
+                  type="button"
+                  data-correct="true">
+            V
+          </button>
+
+          <button class="choice-button"
+                  type="button"
+                  data-correct="false">
+            A
+          </button>
+
+          <button class="choice-button"
+                  type="button"
+                  data-correct="false">
+            Ω
+          </button>
+        </div>
+
+        <p class="challenge-feedback"></p>
+      </article>
+
+    </section>    <section id="missionResult" class="result-block">
+      <h2>🏆 Mission réussie</h2>
+
+      <span class="result-score">4 / 4</span>
+
+      <p>
+        Tu as choisi une alimentation adaptée, identifié la résistance,
+        vérifié la polarité de la LED et sélectionné le bon mode
+        du multimètre.
+      </p>
+    </section>
+
+    <nav class="lesson-navigation">
+      <a class="btn btn-secondary" href="06-multimetre.html">
+        ← Étape 6 : le multimètre
+      </a>
+
+      <a
+        id="nextLesson"
+        class="btn btn-primary next-link"
+        href="08-validation.html">
+        Étape suivante : validation finale →
+      </a>
+    </nav>
+
+  </div>
+</main>
+<script>
+  const challenges =
+    document.querySelectorAll(".challenge");
+
+  const progressValue =
+    document.getElementById("progressValue");
+
+  const progressText =
+    document.getElementById("progressText");
+
+  const missionResult =
+    document.getElementById("missionResult");
+
+  const nextLesson =
+    document.getElementById("nextLesson");
+
+  const completedChallenges = new Set();
+
+  function updateProgress() {
+    const completed = completedChallenges.size;
+    const percentage = (completed / 4) * 100;
+
+    progressValue.style.width = percentage + "%";
+
+    progressText.textContent =
+      completed +
+      (completed === 1
+        ? " étape validée sur 4"
+        : " étapes validées sur 4");
+
+    if (completed === 4) {
+      missionResult.classList.add("visible");
+      nextLesson.classList.add("unlocked");
+    }
+  }
+
+  challenges.forEach(function (challenge) {
+    const buttons =
+      challenge.querySelectorAll(".choice-button");
+
+    const feedback =
+      challenge.querySelector(".challenge-feedback");
+
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function () {
+
+        buttons.forEach(function (item) {
+          item.classList.remove("correct", "wrong");
+        });
+
+        if (button.dataset.correct === "true") {
+          button.classList.add("correct");
+
+          feedback.textContent =
+            "✅ Bonne décision !";
+
+          completedChallenges.add(
+            challenge.dataset.challenge
+          );
+
+          updateProgress();
+
+        } else {
+          button.classList.add("wrong");
+
+          feedback.textContent =
+            "Pas encore. Réfléchis à ce que tu as appris puis réessaie.";
+        }
+
+      });
+    });
+  });
+
+  updateProgress();
+</script>
+
+</body>
+</html>
