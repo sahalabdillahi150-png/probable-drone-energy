@@ -66,6 +66,58 @@
       border-radius: 999px;
       background: rgba(15, 25, 42, 0.88);
       font-weight: 700;
+    }    .component-info {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      z-index: 20;
+      width: min(320px, calc(100% - 40px));
+      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 20px;
+      background: rgba(15, 25, 42, 0.94);
+      color: white;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(10px);
+    }
+
+    .component-info[hidden] {
+      display: none;
+    }
+
+    .component-info h2 {
+      margin: 8px 0 10px;
+      font-size: 1.35rem;
+    }
+
+    .component-info p {
+      margin: 0;
+      color: #bfcee2;
+      line-height: 1.5;
+    }
+
+    .component-icon {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #ffd07a;
+    }
+
+    .component-close {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.10);
+      color: white;
+      font-size: 1.4rem;
+    }
+
+    .component-close:hover {
+      background: rgba(255, 255, 255, 0.20);
     }
   </style>
 </head>
@@ -88,7 +140,27 @@
   <div class="status">
     🟢 Scène 3D · Prototype
   </div>
+<div id="componentInfo" class="component-info" hidden>
+  <button
+    id="closeInfo"
+    class="component-close"
+    type="button"
+    aria-label="Fermer">
+    ×
+  </button>
 
+  <div id="componentIcon" class="component-icon">
+    Ω
+  </div>
+
+  <h2 id="componentTitle">
+    Résistance
+  </h2>
+
+  <p id="componentDescription">
+    La résistance limite le courant dans le circuit.
+  </p>
+</div>
   <canvas id="scene"></canvas><script type="importmap">
 {
   "imports": {
@@ -279,7 +351,14 @@ resistor.position.set(
   0
 );
 
-scene.add(resistor);// LED 3D
+scene.add(resistor);// Informations pédagogiques de la résistance
+resistor.userData.component = "resistor";
+
+resistor.traverse(function (child) {
+  if (child.isMesh) {
+    child.userData.component = "resistor";
+  }
+});// LED 3D
 const led = new THREE.Group();
 
 // Dôme rouge de la LED
@@ -542,7 +621,64 @@ scene.add(powerConnector);
     renderer.render(scene, camera);
   }
 
-  renderer.setAnimationLoop(animate);
+  // Sélection des composants avec la souris
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+
+const componentInfo =
+  document.getElementById("componentInfo");
+
+const componentTitle =
+  document.getElementById("componentTitle");
+
+const componentDescription =
+  document.getElementById("componentDescription");
+
+const componentIcon =
+  document.getElementById("componentIcon");
+
+const closeInfo =
+  document.getElementById("closeInfo");
+
+renderer.domElement.addEventListener(
+  "click",
+  function (event) {
+
+    const rect =
+      renderer.domElement.getBoundingClientRect();
+
+    pointer.x =
+      ((event.clientX - rect.left) / rect.width) * 2 - 1;
+
+    pointer.y =
+      -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycaster.setFromCamera(pointer, camera);
+
+    const intersections =
+      raycaster.intersectObjects(
+        resistor.children,
+        true
+      );
+
+    if (intersections.length > 0) {
+      componentIcon.textContent = "Ω";
+      componentTitle.textContent = "Résistance";
+
+      componentDescription.textContent =
+        "La résistance limite le courant dans le circuit et contribue à protéger la LED.";
+
+      componentInfo.hidden = false;
+    }
+  }
+);
+
+closeInfo.addEventListener(
+  "click",
+  function () {
+    componentInfo.hidden = true;
+  }
+);renderer.setAnimationLoop(animate);
 </script>
 
 </body>
