@@ -374,7 +374,141 @@ led.position.set(
   0
 );
 
-scene.add(led);
+scene.add(led);// Pistes cuivre du PCB
+const copperMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0xd88928,
+    metalness: 0.65,
+    roughness: 0.35
+  });
+
+function createTrack(width, depth, x, z) {
+  const geometry =
+    new THREE.BoxGeometry(width, 0.025, depth);
+
+  const track =
+    new THREE.Mesh(
+      geometry,
+      copperMaterial
+    );
+
+  track.position.set(
+    x,
+    -0.44,
+    z
+  );
+
+  scene.add(track);
+
+  return track;
+}
+
+// Piste entre la résistance et la LED
+createTrack(
+  0.55,
+  0.055,
+  0.05,
+  0
+);
+
+// Piste d'entrée vers la résistance
+createTrack(
+  0.55,
+  0.055,
+  -1.00,
+  0
+);
+
+// Piste de sortie après la LED
+createTrack(
+  0.45,
+  0.055,
+  1.10,
+  0
+);// Connecteur d'alimentation 5 V
+const powerConnector = new THREE.Group();
+
+const connectorBodyGeometry =
+  new THREE.BoxGeometry(
+    0.45,
+    0.22,
+    0.55
+  );
+
+const connectorBodyMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0x202b38,
+    roughness: 0.55
+  });
+
+const connectorBody =
+  new THREE.Mesh(
+    connectorBodyGeometry,
+    connectorBodyMaterial
+  );
+
+powerConnector.add(connectorBody);
+
+// Borne positive
+const terminalGeometry =
+  new THREE.CylinderGeometry(
+    0.07,
+    0.07,
+    0.18,
+    20
+  );
+
+const positiveMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0xff4040,
+    metalness: 0.25,
+    roughness: 0.4
+  });
+
+const positiveTerminal =
+  new THREE.Mesh(
+    terminalGeometry,
+    positiveMaterial
+  );
+
+positiveTerminal.position.set(
+  -0.11,
+  0.18,
+  0
+);
+
+powerConnector.add(positiveTerminal);
+
+// Borne négative
+const negativeMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0x222222,
+    metalness: 0.25,
+    roughness: 0.4
+  });
+
+const negativeTerminal =
+  new THREE.Mesh(
+    terminalGeometry,
+    negativeMaterial
+  );
+
+negativeTerminal.position.set(
+  0.11,
+  0.18,
+  0
+);
+
+powerConnector.add(negativeTerminal);
+
+// Position à l'entrée du PCB
+powerConnector.position.set(
+  -1.05,
+  -0.30,
+  0.55
+);
+
+scene.add(powerConnector);
   // Contrôle de la caméra à la souris
   const controls =
     new OrbitControls(camera, renderer.domElement);
