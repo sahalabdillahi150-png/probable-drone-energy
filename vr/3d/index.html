@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Atelier 3D | DEMI VR PCB</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background: #101827;
+      color: white;
+    }
+
+    #scene {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .interface {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      width: min(350px, calc(100% - 40px));
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 18px;
+      background: rgba(15, 25, 42, 0.88);
+      backdrop-filter: blur(10px);
+    }
+
+    .interface h1 {
+      margin: 0 0 8px;
+      font-size: 1.4rem;
+    }
+
+    .interface p {
+      margin: 0;
+      color: #bfcee2;
+      line-height: 1.5;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 14px;
+      color: #81b7ff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .status {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      z-index: 10;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(15, 25, 42, 0.88);
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="interface">
+    <h1>🖥️ Atelier DEMI VR PCB</h1>
+
+    <p>
+      Prototype 3D de l'atelier pédagogique.
+      La première mission sera consacrée au circuit LED.
+    </p>
+
+    <a class="back" href="../index.html">
+      ← Retour au Laboratoire VR
+    </a>
+  </div>
+
+  <div class="status">
+    🟢 Scène 3D · Prototype
+  </div>
+
+  <canvas id="scene"></canvas><script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+  import * as THREE from "three";
+  import { OrbitControls }
+    from "three/addons/controls/OrbitControls.js";
+
+  const canvas = document.getElementById("scene");
+
+  const scene = new THREE.Scene();
+
+  scene.background =
+    new THREE.Color(0x101827);
+
+  const camera =
+    new THREE.PerspectiveCamera(
+      55,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      100
+    );
+
+  camera.position.set(4, 3.2, 6);
+
+  const renderer =
+    new THREE.WebGLRenderer({
+      canvas: canvas,
+      antialias: true
+    });
+
+  renderer.setPixelRatio(
+    Math.min(window.devicePixelRatio, 2)
+  );
+
+  renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+  );  // Éclairage général
+  const ambientLight =
+    new THREE.AmbientLight(0xffffff, 1.4);
+
+  scene.add(ambientLight);
+
+  // Lumière principale au-dessus de l'établi
+  const mainLight =
+    new THREE.DirectionalLight(0xffffff, 2.2);
+
+  mainLight.position.set(4, 7, 4);
+
+  scene.add(mainLight);
+
+  // Sol
+  const floorGeometry =
+    new THREE.PlaneGeometry(20, 20);
+
+  const floorMaterial =
+    new THREE.MeshStandardMaterial({
+      color: 0x26364a,
+      roughness: 0.9
+    });
+
+  const floor =
+    new THREE.Mesh(
+      floorGeometry,
+      floorMaterial
+    );
+
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = -1.5;
+
+  scene.add(floor);
+
+  // Établi
+  const tableGeometry =
+    new THREE.BoxGeometry(5, 0.35, 3);
+
+  const tableMaterial =
+    new THREE.MeshStandardMaterial({
+      color: 0x8b6748,
+      roughness: 0.8
+    });
+
+  const table =
+    new THREE.Mesh(
+      tableGeometry,
+      tableMaterial
+    );
+
+  table.position.y = -0.8;
+
+  scene.add(table);
+
+  // PCB pédagogique
+  const pcbGeometry =
+    new THREE.BoxGeometry(2.6, 0.12, 1.7);
+
+  const pcbMaterial =
+    new THREE.MeshStandardMaterial({
+      color: 0x16865c,
+      roughness: 0.55,
+      metalness: 0.08
+    });
+
+  const pcb =
+    new THREE.Mesh(
+      pcbGeometry,
+      pcbMaterial
+    );
+
+  pcb.position.set(0, -0.52, 0);
+
+  scene.add(pcb);  // Contrôle de la caméra à la souris
+  const controls =
+    new OrbitControls(camera, renderer.domElement);
+
+  controls.target.set(0, -0.5, 0);
+
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.06;
+
+  controls.minDistance = 3;
+  controls.maxDistance = 12;
+
+  controls.update();
+
+  // Adapter la scène à la taille de la fenêtre
+  window.addEventListener("resize", function () {
+    camera.aspect =
+      window.innerWidth / window.innerHeight;
+
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(
+      window.innerWidth,
+      window.innerHeight
+    );
+  });
+
+  // Boucle d'affichage
+  function animate() {
+    controls.update();
+    renderer.render(scene, camera);
+  }
+
+  renderer.setAnimationLoop(animate);
+</script>
+
+</body>
+</html>
