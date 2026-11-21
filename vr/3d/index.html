@@ -207,7 +207,175 @@
 
   pcb.position.set(0, -0.52, 0);
 
-  scene.add(pcb);  // Contrôle de la caméra à la souris
+  scene.add(pcb);
+// Résistance 3D
+const resistor = new THREE.Group();
+
+// Corps de la résistance
+const resistorBodyGeometry =
+  new THREE.CylinderGeometry(
+    0.12,
+    0.12,
+    0.65,
+    24
+  );
+
+const resistorBodyMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0xd9b27c,
+    roughness: 0.65
+  });
+
+const resistorBody =
+  new THREE.Mesh(
+    resistorBodyGeometry,
+    resistorBodyMaterial
+  );
+
+// Mettre la résistance à l'horizontale
+resistorBody.rotation.z = Math.PI / 2;
+
+resistor.add(resistorBody);
+
+// Première patte métallique
+const leadGeometry =
+  new THREE.CylinderGeometry(
+    0.025,
+    0.025,
+    0.45,
+    12
+  );
+
+const leadMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0xb9c1c9,
+    metalness: 0.8,
+    roughness: 0.3
+  });
+
+const leftLead =
+  new THREE.Mesh(
+    leadGeometry,
+    leadMaterial
+  );
+
+leftLead.rotation.z = Math.PI / 2;
+leftLead.position.x = -0.52;
+
+resistor.add(leftLead);
+
+// Deuxième patte métallique
+const rightLead =
+  leftLead.clone();
+
+rightLead.position.x = 0.52;
+
+resistor.add(rightLead);
+
+// Position de la résistance sur le PCB
+resistor.position.set(
+  -0.55,
+  -0.36,
+  0
+);
+
+scene.add(resistor);// LED 3D
+const led = new THREE.Group();
+
+// Dôme rouge de la LED
+const ledHeadGeometry =
+  new THREE.SphereGeometry(
+    0.18,
+    32,
+    16,
+    0,
+    Math.PI * 2,
+    0,
+    Math.PI / 2
+  );
+
+const ledHeadMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0xff3030,
+    emissive: 0x550000,
+    roughness: 0.3,
+    transparent: true,
+    opacity: 0.9
+  });
+
+const ledHead =
+  new THREE.Mesh(
+    ledHeadGeometry,
+    ledHeadMaterial
+  );
+
+ledHead.position.y = 0.12;
+
+led.add(ledHead);
+
+// Base de la LED
+const ledBaseGeometry =
+  new THREE.CylinderGeometry(
+    0.18,
+    0.18,
+    0.08,
+    24
+  );
+
+const ledBase =
+  new THREE.Mesh(
+    ledBaseGeometry,
+    ledHeadMaterial
+  );
+
+led.add(ledBase);
+
+// Pattes métalliques
+const ledLeadGeometry =
+  new THREE.CylinderGeometry(
+    0.018,
+    0.018,
+    0.35,
+    12
+  );
+
+const ledLeadMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0xb9c1c9,
+    metalness: 0.8,
+    roughness: 0.25
+  });
+
+const ledLeadLeft =
+  new THREE.Mesh(
+    ledLeadGeometry,
+    ledLeadMaterial
+  );
+
+ledLeadLeft.position.set(
+  -0.07,
+  -0.20,
+  0
+);
+
+led.add(ledLeadLeft);
+
+const ledLeadRight =
+  ledLeadLeft.clone();
+
+ledLeadRight.position.x = 0.07;
+
+led.add(ledLeadRight);
+
+// Positionner la LED à droite de la résistance
+led.position.set(
+  0.65,
+  -0.30,
+  0
+);
+
+scene.add(led);
+  // Contrôle de la caméra à la souris
   const controls =
     new OrbitControls(camera, renderer.domElement);
 
