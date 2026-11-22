@@ -453,7 +453,16 @@ led.position.set(
   0
 );
 
-scene.add(led);// Pistes cuivre du PCB
+scene.add(led);
+// Rendre la LED identifiable
+led.userData.component = "led";
+
+led.traverse(function (child) {
+  if (child.isMesh) {
+    child.userData.component = "led";
+  }
+});
+// Pistes cuivre du PCB// Pistes cuivre du PCB
 const copperMaterial =
   new THREE.MeshStandardMaterial({
     color: 0xd88928,
@@ -587,7 +596,14 @@ powerConnector.position.set(
   0.55
 );
 
-scene.add(powerConnector);
+scene.add(powerConnector);// Informations pédagogiques de l'alimentation
+powerConnector.userData.component = "power";
+
+powerConnector.traverse(function (child) {
+  if (child.isMesh) {
+    child.userData.component = "power";
+  }
+});
   // Contrôle de la caméra à la souris
   const controls =
     new OrbitControls(camera, renderer.domElement);
@@ -655,21 +671,47 @@ renderer.domElement.addEventListener(
 
     raycaster.setFromCamera(pointer, camera);
 
-    const intersections =
-      raycaster.intersectObjects(
-        resistor.children,
-        true
-      );
+    const clickableObjects = [
+  ...resistor.children,
+  ...led.children,
+  ...powerConnector.children
+];
+
+const intersections =
+  raycaster.intersectObjects(
+    clickableObjects,
+    true
+  );
+
 
     if (intersections.length > 0) {
-      componentIcon.textContent = "Ω";
-      componentTitle.textContent = "Résistance";
+  const selectedObject = intersections[0].object;
+  const component = selectedObject.userData.component;
 
-      componentDescription.textContent =
-        "La résistance limite le courant dans le circuit et contribue à protéger la LED.";
+  if (component === "resistor") {
+    componentIcon.textContent = "Ω";
+    componentTitle.textContent = "Résistance";
 
-      componentInfo.hidden = false;
-    }
+    componentDescription.textContent =
+      "La résistance limite le courant dans le circuit et contribue à protéger la LED.";
+  }
+
+  if (component === "led") {
+    componentIcon.textContent = "💡";
+    componentTitle.textContent = "LED";
+
+    componentDescription.textContent =
+      "La LED produit de la lumière et possède une polarité : anode et cathode.";
+  }
+if (component === "power") {
+  componentIcon.textContent = "🔌";
+  componentTitle.textContent = "Alimentation 5 V";
+
+  componentDescription.textContent =
+    "L'alimentation fournit l'énergie électrique nécessaire au circuit.";
+}
+  componentInfo.hidden = false;
+}
   }
 );
 
