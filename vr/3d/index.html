@@ -281,7 +281,42 @@ renderer.xr.enabled = true;
 const vrButton =
   VRButton.createButton(renderer);
 
-document.body.appendChild(vrButton); 
+document.body.appendChild(vrButton); // Contrôleurs WebXR du Meta Quest
+const controller1 =
+  renderer.xr.getController(0);
+
+const controller2 =
+  renderer.xr.getController(1);
+
+scene.add(controller1);
+scene.add(controller2);
+
+// Rayon de pointage visible
+const rayGeometry =
+  new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(0, 0, 0),
+    new THREE.Vector3(0, 0, -1)
+  ]);
+
+const rayMaterial =
+  new THREE.LineBasicMaterial({
+    color: 0x66b3ff
+  });
+
+function addControllerRay(controller) {
+  const ray =
+    new THREE.Line(
+      rayGeometry,
+      rayMaterial
+    );
+
+  ray.scale.z = 2;
+
+  controller.add(ray);
+}
+
+addControllerRay(controller1);
+addControllerRay(controller2);
  // Éclairage général
   const ambientLight =
     new THREE.AmbientLight(0xffffff, 1.4);
