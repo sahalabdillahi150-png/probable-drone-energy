@@ -368,7 +368,7 @@ addControllerRay(controller2);
       tableMaterial
     );
 
- table.position.set(0, 0.75, -1.2);
+table.position.set(0, 1.00, -0.95);
 
   scene.add(table);
 
@@ -389,7 +389,7 @@ addControllerRay(controller2);
       pcbMaterial
     );
 
- pcb.position.set(0, 0.805, -1.2);
+ pcb.position.set(0, 1.055, -0.95);
 
   scene.add(pcb);
 // Résistance 3D
@@ -462,9 +462,10 @@ resistor.scale.setScalar(0.20);
 
 resistor.position.set(
   -0.12,
-  0.84,
-  -1.20
+  1.09,
+  -0.95
 );
+
 
 scene.add(resistor);// Informations pédagogiques de la résistance
 resistor.userData.component = "resistor";
@@ -567,8 +568,8 @@ led.scale.setScalar(0.20);
 
 led.position.set(
   0.14,
-  0.84,
-  -1.20
+  1.09,
+  -0.95
 );
 
 scene.add(led);
@@ -601,7 +602,7 @@ function createTrack(width, depth, x, z) {
 
 track.position.set(
   x,
-  0.825,
+  1.075,
   z
 );
 
@@ -615,7 +616,7 @@ createTrack(
   0.12,
   0.012,
   0.01,
-  -1.20
+  -0.95
 );
 
 // Piste d'entrée vers la résistance
@@ -623,7 +624,7 @@ createTrack(
   0.11,
   0.012,
   -0.20,
-  -1.20
+  -0.95
 );
 
 // Piste de sortie après la LED
@@ -631,7 +632,7 @@ createTrack(
   0.10,
   0.012,
   0.22,
-  -1.20
+  -0.95
 );
 // Connecteur d'alimentation 5 V
 const powerConnector = new THREE.Group();
@@ -715,8 +716,8 @@ powerConnector.scale.setScalar(0.20);
 
 powerConnector.position.set(
   -0.22,
-  0.84,
-  -1.12
+  1.09,
+  -0.87
 );
 
 scene.add(powerConnector);// Informations pédagogiques de l'alimentation
