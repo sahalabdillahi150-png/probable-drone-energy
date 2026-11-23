@@ -232,9 +232,15 @@
 </script>
 
 <script type="module">
-  import * as THREE from "three";
+  import * as THREE from 
+"three";
+
   import { OrbitControls }
-    from "three/addons/controls/OrbitControls.js";
+from "three/addons/controls/OrbitControls.js";
+
+import { VRButton }
+  from "three/addons/webxr/VRButton.js";
+    
 
   const canvas = document.getElementById("scene");
 
@@ -266,7 +272,17 @@
   renderer.setSize(
     window.innerWidth,
     window.innerHeight
-  );  // Éclairage général
+  );
+
+// Activer WebXR
+renderer.xr.enabled = true;
+
+// Ajouter le bouton d'entrée en VR
+const vrButton =
+  VRButton.createButton(renderer);
+
+document.body.appendChild(vrButton); 
+ // Éclairage général
   const ambientLight =
     new THREE.AmbientLight(0xffffff, 1.4);
 
