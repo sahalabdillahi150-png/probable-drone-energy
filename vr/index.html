@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Laboratoire VR | DEMI VR PCB</title>
+
+  <meta
+    name="description"
+    content="Laboratoire VR pédagogique DEMI VR PCB - Calais & Marck.">
+
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    .vr-page {
+      min-height: 100vh;
+      padding: 48px 0 80px;
+    }
+
+    .vr-container {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .vr-back {
+      display: inline-block;
+      margin-bottom: 28px;
+      font-weight: 700;
+    }
+
+    .vr-hero {
+      padding: 38px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--white);
+    }
+
+    .vr-label {
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .vr-hero h1 {
+      margin: 10px 0 16px;
+    }
+
+    .vr-intro {
+      max-width: 760px;
+      font-size: 1.08rem;
+    }
+
+    .vr-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: #eef6ff;
+      font-weight: 700;
+    }
+      .vr-choices {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 28px;
+    }
+
+    .vr-choice {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--white);
+    }
+
+    .vr-choice-primary {
+      background: #eef6ff;
+      border-color: #cfe3ff;
+    }
+
+    .vr-icon {
+      display: block;
+      margin-bottom: 14px;
+      font-size: 2.5rem;
+    }
+
+    .vr-choice h2 {
+      margin: 0 0 12px;
+    }
+
+    .vr-choice p {
+      margin-bottom: 20px;
+      color: var(--muted);
+    }
+
+    .vr-choice button:disabled {
+      cursor: not-allowed;
+      opacity: 0.65;
+    }
+
+    .vr-mission {
+      margin-top: 28px;
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--white);
+    }
+
+    .vr-circuit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+      padding: 22px;
+      border-radius: 18px;
+      background: #eef6ff;
+    }
+
+    .vr-circuit span {
+      padding: 12px 16px;
+      border-radius: 14px;
+      background: var(--white);
+      font-weight: 800;
+    }
+
+    .vr-circuit strong {
+      color: var(--muted);
+    }
+
+    @media (max-width: 700px) {
+      .vr-choices {
+        grid-template-columns: 1fr;
+      }
+
+      .vr-hero,
+      .vr-choice,
+      .vr-mission {
+        padding: 22px;
+      }
+    }</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="../index.html">
+      <strong>DEMI VR PCB</strong>
+    </a>
+  </div>
+</header>
+
+<main class="vr-page">
+  <div class="vr-container">
+
+    <a class="vr-back" href="../index.html">
+      ← Retour à l'accueil
+    </a>
+
+    <section class="vr-hero">
+
+      <p class="vr-label">
+        DEMI VR PCB · Laboratoire immersif
+      </p>
+
+      <h1>🥽 Laboratoire VR</h1>
+
+      <p class="vr-intro">
+        Découvre l'électronique et les PCB dans un environnement
+        pédagogique en 3D. Cette première version servira de base
+        aux futures expériences avec ton Meta Quest 3S.
+      </p>
+
+      <div class="vr-status">
+        🟢 Prototype VR · Phase 1
+      </div>
+
+    </section>
+    <section class="vr-choices">
+
+      <div class="vr-choice">
+        <span class="vr-icon">🖥️</span>
+
+        <h2>Explorer en 3D</h2>
+
+        <p>
+          Découvre le futur atelier DEMI VR PCB directement
+          depuis un ordinateur, une tablette ou un navigateur compatible.
+        </p>
+
+        <button class="btn btn-secondary" type="button" disabled>
+          Bientôt disponible
+        </button>
+      </div>
+
+      <div class="vr-choice vr-choice-primary">
+        <span class="vr-icon">🥽</span>
+
+        <h2>Mode Meta Quest</h2>
+
+        <p>
+          Cette zone accueillera l'expérience immersive destinée
+          à ton Meta Quest 3S.
+        </p>
+
+        <button class="btn btn-primary" type="button" disabled>
+          Entrer en VR · bientôt
+        </button>
+      </div>
+
+    </section>
+
+    <section class="vr-mission">
+      <p class="vr-label">
+        Première expérience prévue
+      </p>
+
+      <h2>🎯 Mission 1 · Comprendre un circuit LED</h2>
+
+      <p>
+        Dans la future scène immersive, l'apprenant devra identifier
+        l'alimentation, la résistance et la LED puis comprendre
+        leur rôle dans le circuit.
+      </p>
+
+      <div class="vr-circuit">
+        <span>🔋 Alimentation</span>
+        <strong>→</strong>
+        <span>Ω Résistance</span>
+        <strong>→</strong>
+        <span>💡 LED</span>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+</body>
+</html>

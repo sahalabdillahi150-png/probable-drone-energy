@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Atelier 3D | DEMI VR PCB</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background: #101827;
+      color: white;
+    }
+
+    #scene {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .interface {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      width: min(350px, calc(100% - 40px));
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 18px;
+      background: rgba(15, 25, 42, 0.88);
+      backdrop-filter: blur(10px);
+    }
+
+    .interface h1 {
+      margin: 0 0 8px;
+      font-size: 1.4rem;
+    }
+
+    .interface p {
+      margin: 0;
+      color: #bfcee2;
+      line-height: 1.5;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 14px;
+      color: #81b7ff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .status {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      z-index: 10;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(15, 25, 42, 0.88);
+      font-weight: 700;
+    }    .component-info {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      z-index: 20;
+      width: min(320px, calc(100% - 40px));
+      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 20px;
+      background: rgba(15, 25, 42, 0.94);
+      color: white;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(10px);
+    }
+
+    .component-info[hidden] {
+      display: none;
+    }
+
+    .component-info h2 {
+      margin: 8px 0 10px;
+      font-size: 1.35rem;
+    }
+
+    .component-info p {
+      margin: 0;
+      color: #bfcee2;
+      line-height: 1.5;
+    }
+
+    .component-icon {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #ffd07a;
+    }
+
+    .component-close {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.10);
+      color: white;
+      font-size: 1.4rem;
+    }
+
+    .component-close:hover {
+      background: rgba(255, 255, 255, 0.20);
+    }
+  .mission-panel {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  z-index: 20;
+  width: min(360px, calc(100% - 40px));
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  background: rgba(15, 25, 42, 0.94);
+  color: white;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(10px);
+}
+
+.mission-panel h2 {
+  margin: 8px 0 10px;
+  font-size: 1.3rem;
+}
+
+.mission-panel p {
+  margin: 0 0 14px;
+  color: #bfcee2;
+  line-height: 1.5;
+}
+
+.mission-label {
+  color: #7fbbff;
+  font-weight: 800;
+}
+
+.mission-status {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.10);
+  font-weight: 800;
+}
+
+.mission-panel.success {
+  border-color: #52d48b;
+  background: rgba(18, 75, 53, 0.96);
+}</style>
+</head>
+
+<body>
+
+  <div class="interface">
+    <h1>🖥️ Atelier DEMI VR PCB</h1>
+
+    <p>
+      Prototype 3D de l'atelier pédagogique.
+      La première mission sera consacrée au circuit LED.
+    </p>
+
+    <a class="back" href="../index.html">
+      ← Retour au Laboratoire VR
+    </a>
+  </div>
+
+  <div class="status">
+    🟢 Scène 3D · Prototype
+  </div>
+<div id="componentInfo" class="component-info" hidden>
+  <button
+    id="closeInfo"
+    class="component-close"
+    type="button"
+    aria-label="Fermer">
+    ×
+  </button>
+
+  <div id="componentIcon" class="component-icon">
+    Ω
+  </div>
+
+  <h2 id="componentTitle">
+    Résistance
+  </h2>
+
+  <p id="componentDescription">
+    La résistance limite le courant dans le circuit.
+  </p>
+</div>
+  
+<div id="missionPanel" class="mission-panel">
+  <div class="mission-label">
+    🎯 Mission 1
+  </div>
+
+  <h2>Trouve le bon composant</h2>
+
+  <p id="missionText">
+    Sélectionne le composant qui limite le courant
+    et contribue à protéger la LED.
+  </p>
+
+  <div id="missionStatus" class="mission-status">
+    Progression : 0 / 1
+  </div>
+</div>
+<canvas id="scene"></canvas>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+  import * as THREE from 
+"three";
+
+  import { OrbitControls }
+from "three/addons/controls/OrbitControls.js";
+
+import { VRButton }
+  from "three/addons/webxr/VRButton.js";
+    
+
+  const canvas = document.getElementById("scene");
+
+  const scene = new THREE.Scene();
+
+  scene.background =
+    new THREE.Color(0x101827);
+
+  const camera =
+    new THREE.PerspectiveCamera(
+      55,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      100
+    );
+
+  camera.position.set(4, 3.2, 6);
+
+  const renderer =
+    new THREE.WebGLRenderer({
+      canvas: canvas,
+      antialias: true
+    });
+
+  renderer.setPixelRatio(
+    Math.min(window.devicePixelRatio, 2)
+  );
+
+  renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+  );
+
+// Activer WebXR
+renderer.xr.enabled = true;
+
+// Ajouter le bouton d'entrée en VR
+const vrButton =
+  VRButton.createButton(renderer);
+
+document.body.appendChild(vrButton); 
+ // Éclairage général
+  const ambientLight =
+    new THREE.AmbientLight(0xffffff, 1.4);
+
+  scene.add(ambientLight);
+
+  // Lumière principale au-dessus de l'établi
+  const mainLight =
+    new THREE.DirectionalLight(0xffffff, 2.2);
+
+  mainLight.position.set(4, 7, 4);
+
+  scene.add(mainLight);
+
+  // Sol
+  const floorGeometry =
+    new THREE.PlaneGeometry(20, 20);
+
+  const floorMaterial =
+    new THREE.MeshStandardMaterial({
+      color: 0x26364a,
+      roughness: 0.9
+    });
+
+  const floor =
+    new THREE.Mesh(
+      floorGeometry,
+      floorMaterial
+    );
+
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = -1.5;
+
+  scene.add(floor);
+
+  // Établi
+  const tableGeometry =
+    new THREE.BoxGeometry(5, 0.35, 3);
+
+  const tableMaterial =
+    new THREE.MeshStandardMaterial({
+      color: 0x8b6748,
+      roughness: 0.8
+    });
+
+  const table =
+    new THREE.Mesh(
+      tableGeometry,
+      tableMaterial
+    );
+
+  table.position.y = -0.8;
+
+  scene.add(table);
+
+  // PCB pédagogique
+  const pcbGeometry =
+    new THREE.BoxGeometry(2.6, 0.12, 1.7);
+
+  const pcbMaterial =
+    new THREE.MeshStandardMaterial({
+      color: 0x16865c,
+      roughness: 0.55,
+      metalness: 0.08
+    });
+
+  const pcb =
+    new THREE.Mesh(
+      pcbGeometry,
+      pcbMaterial
+    );
+
+  pcb.position.set(0, -0.52, 0);
+
+  scene.add(pcb);
+// Résistance 3D
+const resistor = new THREE.Group();
+
+// Corps de la résistance
+const resistorBodyGeometry =
+  new THREE.CylinderGeometry(
+    0.12,
+    0.12,
+    0.65,
+    24
+  );
+
+const resistorBodyMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0xd9b27c,
+    roughness: 0.65
+  });
+
+const resistorBody =
+  new THREE.Mesh(
+    resistorBodyGeometry,
+    resistorBodyMaterial
+  );
+
+// Mettre la résistance à l'horizontale
+resistorBody.rotation.z = Math.PI / 2;
+
+resistor.add(resistorBody);
+
+// Première patte métallique
+const leadGeometry =
+  new THREE.CylinderGeometry(
+    0.025,
+    0.025,
+    0.45,
+    12
+  );
+
+const leadMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0xb9c1c9,
+    metalness: 0.8,
+    roughness: 0.3
+  });
+
+const leftLead =
+  new THREE.Mesh(
+    leadGeometry,
+    leadMaterial
+  );
+
+leftLead.rotation.z = Math.PI / 2;
+leftLead.position.x = -0.52;
+
+resistor.add(leftLead);
+
+// Deuxième patte métallique
+const rightLead =
+  leftLead.clone();
+
+rightLead.position.x = 0.52;
+
+resistor.add(rightLead);
+
+// Position de la résistance sur le PCB
+resistor.position.set(
+  -0.55,
+  -0.36,
+  0
+);
+
+scene.add(resistor);// Informations pédagogiques de la résistance
+resistor.userData.component = "resistor";
+
+resistor.traverse(function (child) {
+  if (child.isMesh) {
+    child.userData.component = "resistor";
+  }
+});// LED 3D
+const led = new THREE.Group();
+
+// Dôme rouge de la LED
+const ledHeadGeometry =
+  new THREE.SphereGeometry(
+    0.18,
+    32,
+    16,
+    0,
+    Math.PI * 2,
+    0,
+    Math.PI / 2
+  );
+
+const ledHeadMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0xff3030,
+    emissive: 0x550000,
+    roughness: 0.3,
+    transparent: true,
+    opacity: 0.9
+  });
+
+const ledHead =
+  new THREE.Mesh(
+    ledHeadGeometry,
+    ledHeadMaterial
+  );
+
+ledHead.position.y = 0.12;
+
+led.add(ledHead);
+
+// Base de la LED
+const ledBaseGeometry =
+  new THREE.CylinderGeometry(
+    0.18,
+    0.18,
+    0.08,
+    24
+  );
+
+const ledBase =
+  new THREE.Mesh(
+    ledBaseGeometry,
+    ledHeadMaterial
+  );
+
+led.add(ledBase);
+
+// Pattes métalliques
+const ledLeadGeometry =
+  new THREE.CylinderGeometry(
+    0.018,
+    0.018,
+    0.35,
+    12
+  );
+
+const ledLeadMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0xb9c1c9,
+    metalness: 0.8,
+    roughness: 0.25
+  });
+
+const ledLeadLeft =
+  new THREE.Mesh(
+    ledLeadGeometry,
+    ledLeadMaterial
+  );
+
+ledLeadLeft.position.set(
+  -0.07,
+  -0.20,
+  0
+);
+
+led.add(ledLeadLeft);
+
+const ledLeadRight =
+  ledLeadLeft.clone();
+
+ledLeadRight.position.x = 0.07;
+
+led.add(ledLeadRight);
+
+// Positionner la LED à droite de la résistance
+led.position.set(
+  0.65,
+  -0.30,
+  0
+);
+
+scene.add(led);
+// Rendre la LED identifiable
+led.userData.component = "led";
+
+led.traverse(function (child) {
+  if (child.isMesh) {
+    child.userData.component = "led";
+  }
+});
+// Pistes cuivre du PCB// Pistes cuivre du PCB
+const copperMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0xd88928,
+    metalness: 0.65,
+    roughness: 0.35
+  });
+
+function createTrack(width, depth, x, z) {
+  const geometry =
+    new THREE.BoxGeometry(width, 0.025, depth);
+
+  const track =
+    new THREE.Mesh(
+      geometry,
+      copperMaterial
+    );
+
+  track.position.set(
+    x,
+    -0.44,
+    z
+  );
+
+  scene.add(track);
+
+  return track;
+}
+
+// Piste entre la résistance et la LED
+createTrack(
+  0.55,
+  0.055,
+  0.05,
+  0
+);
+
+// Piste d'entrée vers la résistance
+createTrack(
+  0.55,
+  0.055,
+  -1.00,
+  0
+);
+
+// Piste de sortie après la LED
+createTrack(
+  0.45,
+  0.055,
+  1.10,
+  0
+);// Connecteur d'alimentation 5 V
+const powerConnector = new THREE.Group();
+
+const connectorBodyGeometry =
+  new THREE.BoxGeometry(
+    0.45,
+    0.22,
+    0.55
+  );
+
+const connectorBodyMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0x202b38,
+    roughness: 0.55
+  });
+
+const connectorBody =
+  new THREE.Mesh(
+    connectorBodyGeometry,
+    connectorBodyMaterial
+  );
+
+powerConnector.add(connectorBody);
+
+// Borne positive
+const terminalGeometry =
+  new THREE.CylinderGeometry(
+    0.07,
+    0.07,
+    0.18,
+    20
+  );
+
+const positiveMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0xff4040,
+    metalness: 0.25,
+    roughness: 0.4
+  });
+
+const positiveTerminal =
+  new THREE.Mesh(
+    terminalGeometry,
+    positiveMaterial
+  );
+
+positiveTerminal.position.set(
+  -0.11,
+  0.18,
+  0
+);
+
+powerConnector.add(positiveTerminal);
+
+// Borne négative
+const negativeMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0x222222,
+    metalness: 0.25,
+    roughness: 0.4
+  });
+
+const negativeTerminal =
+  new THREE.Mesh(
+    terminalGeometry,
+    negativeMaterial
+  );
+
+negativeTerminal.position.set(
+  0.11,
+  0.18,
+  0
+);
+
+powerConnector.add(negativeTerminal);
+
+// Position à l'entrée du PCB
+powerConnector.position.set(
+  -1.05,
+  -0.30,
+  0.55
+);
+
+scene.add(powerConnector);// Informations pédagogiques de l'alimentation
+powerConnector.userData.component = "power";
+
+powerConnector.traverse(function (child) {
+  if (child.isMesh) {
+    child.userData.component = "power";
+  }
+});
+  // Contrôle de la caméra à la souris
+  const controls =
+    new OrbitControls(camera, renderer.domElement);
+
+  controls.target.set(0, -0.5, 0);
+
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.06;
+
+  controls.minDistance = 3;
+  controls.maxDistance = 12;
+
+  controls.update();
+
+  // Adapter la scène à la taille de la fenêtre
+  window.addEventListener("resize", function () {
+    camera.aspect =
+      window.innerWidth / window.innerHeight;
+
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(
+      window.innerWidth,
+      window.innerHeight
+    );
+  });
+
+  // Boucle d'affichage
+  function animate() {
+    controls.update();
+    renderer.render(scene, camera);
+  }
+
+  // Sélection des composants avec la souris
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+
+const componentInfo =
+  document.getElementById("componentInfo");
+
+const componentTitle =
+  document.getElementById("componentTitle");
+
+const componentDescription =
+  document.getElementById("componentDescription");
+
+const componentIcon =
+  document.getElementById("componentIcon");
+
+const closeInfo =
+  document.getElementById("closeInfo");
+// Mission pédagogique
+const missionPanel =
+  document.getElementById("missionPanel");
+
+const missionText =
+  document.getElementById("missionText");
+
+const missionStatus =
+  document.getElementById("missionStatus");
+
+let missionCompleted = false;
+renderer.domElement.addEventListener(
+  "click",
+  function (event) {
+
+    const rect =
+      renderer.domElement.getBoundingClientRect();
+
+    pointer.x =
+      ((event.clientX - rect.left) / rect.width) * 2 - 1;
+
+    pointer.y =
+      -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycaster.setFromCamera(pointer, camera);
+
+    const clickableObjects = [
+  ...resistor.children,
+  ...led.children,
+  ...powerConnector.children
+];
+
+const intersections =
+  raycaster.intersectObjects(
+    clickableObjects,
+    true
+  );
+
+
+    if (intersections.length > 0) {
+  const selectedObject = intersections[0].object;
+  const component = selectedObject.userData.component;
+
+  if (component === "resistor") {
+    componentIcon.textContent = "Ω";
+    componentTitle.textContent = "Résistance";
+
+    componentDescription.textContent =
+      "La résistance limite le courant dans le circuit et contribue à protéger la LED.";
+  }
+
+  if (component === "led") {
+    componentIcon.textContent = "💡";
+    componentTitle.textContent = "LED";
+
+    componentDescription.textContent =
+      "La LED produit de la lumière et possède une polarité : anode et cathode.";
+  }
+if (component === "power") {
+  componentIcon.textContent = "🔌";
+  componentTitle.textContent = "Alimentation 5 V";
+
+  componentDescription.textContent =
+    "L'alimentation fournit l'énergie électrique nécessaire au circuit.";
+}
+ // Vérification de la Mission 1
+if (!missionCompleted) {
+
+  if (component === "resistor") {
+    missionCompleted = true;
+
+    missionPanel.classList.add("success");
+
+    missionText.textContent =
+      "✅ Mission réussie ! La résistance limite le courant et contribue à protéger la LED.";
+
+    missionStatus.textContent =
+      "Progression : 1 / 1 · Mission validée";
+  }
+
+  if (component === "led") {
+    missionText.textContent =
+      "❌ La LED produit de la lumière. Cherche le composant qui limite le courant.";
+  }
+
+  if (component === "power") {
+    missionText.textContent =
+      "❌ L'alimentation fournit l'énergie. Cherche le composant qui limite le courant.";
+  }
+} componentInfo.hidden = false;
+}
+  }
+);
+
+closeInfo.addEventListener(
+  "click",
+  function () {
+    componentInfo.hidden = true;
+  }
+);renderer.setAnimationLoop(animate);
+</script>
+
+</body>
+</html>
