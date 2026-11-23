@@ -319,7 +319,7 @@ document.body.appendChild(vrButton);
 
   // Établi
   const tableGeometry =
-    new THREE.BoxGeometry(5, 0.35, 3);
+    new THREE.BoxGeometry(1.4, 0.08, 0.8);
 
   const tableMaterial =
     new THREE.MeshStandardMaterial({
@@ -333,13 +333,13 @@ document.body.appendChild(vrButton);
       tableMaterial
     );
 
-  table.position.y = -0.8;
+ table.position.set(0, 0.75, -1.2);
 
   scene.add(table);
 
   // PCB pédagogique
   const pcbGeometry =
-    new THREE.BoxGeometry(2.6, 0.12, 1.7);
+ new THREE.BoxGeometry(0.55, 0.025, 0.35);
 
   const pcbMaterial =
     new THREE.MeshStandardMaterial({
@@ -354,7 +354,7 @@ document.body.appendChild(vrButton);
       pcbMaterial
     );
 
-  pcb.position.set(0, -0.52, 0);
+ pcb.position.set(0, 0.805, -1.2);
 
   scene.add(pcb);
 // Résistance 3D
@@ -422,10 +422,13 @@ rightLead.position.x = 0.52;
 resistor.add(rightLead);
 
 // Position de la résistance sur le PCB
+// Mise à l'échelle VR de la résistance
+resistor.scale.setScalar(0.20);
+
 resistor.position.set(
-  -0.55,
-  -0.36,
-  0
+  -0.12,
+  0.84,
+  -1.20
 );
 
 scene.add(resistor);// Informations pédagogiques de la résistance
@@ -524,10 +527,13 @@ ledLeadRight.position.x = 0.07;
 led.add(ledLeadRight);
 
 // Positionner la LED à droite de la résistance
+// Mise à l'échelle VR de la LED
+led.scale.setScalar(0.20);
+
 led.position.set(
-  0.65,
-  -0.30,
-  0
+  0.14,
+  0.84,
+  -1.20
 );
 
 scene.add(led);
@@ -549,7 +555,8 @@ const copperMaterial =
 
 function createTrack(width, depth, x, z) {
   const geometry =
-    new THREE.BoxGeometry(width, 0.025, depth);
+    new THREE.BoxGeometry(width, 0.006
+, depth);
 
   const track =
     new THREE.Mesh(
@@ -557,11 +564,11 @@ function createTrack(width, depth, x, z) {
       copperMaterial
     );
 
-  track.position.set(
-    x,
-    -0.44,
-    z
-  );
+track.position.set(
+  x,
+  0.825,
+  z
+);
 
   scene.add(track);
 
@@ -570,27 +577,28 @@ function createTrack(width, depth, x, z) {
 
 // Piste entre la résistance et la LED
 createTrack(
-  0.55,
-  0.055,
-  0.05,
-  0
+  0.12,
+  0.012,
+  0.01,
+  -1.20
 );
 
 // Piste d'entrée vers la résistance
 createTrack(
-  0.55,
-  0.055,
-  -1.00,
-  0
+  0.11,
+  0.012,
+  -0.20,
+  -1.20
 );
 
 // Piste de sortie après la LED
 createTrack(
-  0.45,
-  0.055,
-  1.10,
-  0
-);// Connecteur d'alimentation 5 V
+  0.10,
+  0.012,
+  0.22,
+  -1.20
+);
+// Connecteur d'alimentation 5 V
 const powerConnector = new THREE.Group();
 
 const connectorBodyGeometry =
@@ -667,10 +675,13 @@ negativeTerminal.position.set(
 powerConnector.add(negativeTerminal);
 
 // Position à l'entrée du PCB
+// Mise à l'échelle VR de l'alimentation
+powerConnector.scale.setScalar(0.20);
+
 powerConnector.position.set(
-  -1.05,
-  -0.30,
-  0.55
+  -0.22,
+  0.84,
+  -1.12
 );
 
 scene.add(powerConnector);// Informations pédagogiques de l'alimentation
@@ -685,15 +696,24 @@ powerConnector.traverse(function (child) {
   const controls =
     new OrbitControls(camera, renderer.domElement);
 
-  controls.target.set(0, -0.5, 0);
+// Centrer les contrôles sur le nouvel établi VR
+controls.target.set(
+  0,
+  0.78,
+  -1.20
+);
 
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.06;
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
 
-  controls.minDistance = 3;
-  controls.maxDistance = 12;
+// Autoriser un zoom adapté au petit atelier
+controls.enableZoom = true;
+controls.zoomSpeed = 1.2;
 
-  controls.update();
+controls.minDistance = 0.35;
+controls.maxDistance = 8;
+
+controls.update();
 
   // Adapter la scène à la taille de la fenêtre
   window.addEventListener("resize", function () {
