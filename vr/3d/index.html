@@ -290,7 +290,20 @@ const controller2 =
 
 scene.add(controller1);
 scene.add(controller2);
+// Gâchettes des contrôleurs VR
+controller1.addEventListener(
+  "select",
+  function () {
+    selectFromController(controller1);
+  }
+);
 
+controller2.addEventListener(
+  "select",
+  function () {
+    selectFromController(controller2);
+  }
+);
 // Rayon de pointage visible
 const rayGeometry =
   new THREE.BufferGeometry().setFromPoints([
@@ -882,6 +895,78 @@ if (!missionCompleted) {
   }
 );
 
+// Sélection d'un composant depuis un contrôleur XR
+function selectFromController(controller) {
+  const tempMatrix = new THREE.Matrix4();
+
+  tempMatrix.identity().extractRotation(
+    controller.matrixWorld
+  );
+
+  raycaster.ray.origin.setFromMatrixPosition(
+    controller.matrixWorld
+  );
+
+  raycaster.ray.direction.set(
+    0,
+    0,
+    -1
+  );
+
+  raycaster.ray.direction.applyMatrix4(
+    tempMatrix
+  );
+
+  const xrClickableObjects = [
+    ...resistor.children,
+    ...led.children,
+    ...powerConnector.children
+  ];
+
+  const intersections =
+    raycaster.intersectObjects(
+      xrClickableObjects,
+      true
+    );
+
+  if (intersections.length > 0) {
+    const selectedObject =
+      intersections[0].object;
+
+    const component =
+      selectedObject.userData.component;
+
+    handleXRSelection(component);
+  }
+}
+function handleXRSelection(component) {
+
+  if (component === "resistor") {
+    componentIcon.textContent = "Ω";
+    componentTitle.textContent = "Résistance";
+
+    componentDescription.textContent =
+      "La résistance limite le courant et contribue à protéger la LED.";
+  }
+
+  if (component === "led") {
+    componentIcon.textContent = "💡";
+    componentTitle.textContent = "LED";
+
+    componentDescription.textContent =
+      "La LED produit de la lumière et possède une polarité.";
+  }
+
+  if (component === "power") {
+    componentIcon.textContent = "🔌";
+    componentTitle.textContent = "Alimentation 5 V";
+
+    componentDescription.textContent =
+      "L'alimentation fournit l'énergie électrique nécessaire au circuit.";
+  }
+
+  componentInfo.hidden = false;
+}
 closeInfo.addEventListener(
   "click",
   function () {
