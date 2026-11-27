@@ -323,7 +323,7 @@ function addControllerRay(controller) {
       rayMaterial
     );
 
-  ray.scale.z = 2;
+  ray.scale.z = 5;
 
   controller.add(ray);
 }
@@ -897,25 +897,8 @@ if (!missionCompleted) {
 
 // Sélection d'un composant depuis un contrôleur XR
 function selectFromController(controller) {
-  const tempMatrix = new THREE.Matrix4();
-
-  tempMatrix.identity().extractRotation(
-    controller.matrixWorld
-  );
-
-  raycaster.ray.origin.setFromMatrixPosition(
-    controller.matrixWorld
-  );
-
-  raycaster.ray.direction.set(
-    0,
-    0,
-    -1
-  );
-
-  raycaster.ray.direction.applyMatrix4(
-    tempMatrix
-  );
+// Utiliser directement le rayon WebXR du contrôleur
+raycaster.setFromXRController(controller);
 
   const xrClickableObjects = [
     ...resistor.children,
