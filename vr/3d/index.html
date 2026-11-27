@@ -777,6 +777,64 @@ powerConnector.traverse(function (child) {
     child.userData.component = "power";
   }
 });
+
+  // ===== ENSEMBLE PCB MANIPULABLE =====
+const pcbAssembly = new THREE.Group();
+pcbAssembly.name = "pcbAssembly";
+scene.add(pcbAssembly);
+
+// Regrouper les éléments principaux du PCB
+// tout en conservant leur position actuelle.
+pcbAssembly.attach(pcb);
+pcbAssembly.attach(resistor);
+pcbAssembly.attach(led);
+pcbAssembly.attach(powerConnector);
+
+pcbAssembly.userData.grabbable = true;
+// ===== GRAB PCB AVEC LE BOUTON GRIP =====
+
+let pcbGrabbedBy = null;
+
+function grabPCB(controller) {
+  // Empêche les deux contrôleurs de saisir le PCB en même temps
+  if (pcbGrabbedBy !== null) return;
+
+  pcbGrabbedBy = controller;
+
+  // Attache tout l'ensemble PCB à la manette
+  // en conservant sa position au moment de la prise.
+  controller.attach(pcbAssembly);
+
+  updateVRStatus("PCB saisi · déplace ta main · relâche le Grip pour déposer");
+}
+
+function releasePCB(controller) {
+  // Seul le contrôleur qui tient le PCB peut le relâcher
+  if (pcbGrabbedBy !== controller) return;
+
+  // Replace le PCB dans la scène en conservant sa position actuelle
+  scene.attach(pcbAssembly);
+
+  pcbGrabbedBy = null;
+
+  updateVRStatus("PCB déposé · Grip pour le reprendre");
+}
+
+controller1.addEventListener("squeezestart", function () {
+  grabPCB(controller1);
+});
+
+controller1.addEventListener("squeezeend", function () {
+  releasePCB(controller1);
+});
+
+controller2.addEventListener("squeezestart", function () {
+  grabPCB(controller2);
+});
+
+controller2.addEventListener("squeezeend", function () {
+  releasePCB(controller2);
+});  
   // Contrôle de la caméra à la souris
   const controls =
     new OrbitControls(camera, renderer.domElement);
