@@ -290,20 +290,19 @@ const controller2 =
 
 scene.add(controller1);
 scene.add(controller2);
-// Gâchettes des contrôleurs VR
-controller1.addEventListener(
-  "select",
-  function () {
-    selectFromController(controller1);
-  }
-);
+// Gâchettes des contrôleurs VR : déclenchement dès l'appui
+function registerXRController(controller, label) {
+  controller.addEventListener("connected", function () {
+    updateVRStatus(label + " connecté · vise un composant puis appuie");
+  });
 
-controller2.addEventListener(
-  "select",
-  function () {
-    selectFromController(controller2);
-  }
-);
+  controller.addEventListener("selectstart", function () {
+    selectFromController(controller);
+  });
+}
+
+registerXRController(controller1, "Contrôleur 1");
+registerXRController(controller2, "Contrôleur 2");
 // Rayon de pointage visible
 const rayGeometry =
   new THREE.BufferGeometry().setFromPoints([
@@ -330,6 +329,43 @@ function addControllerRay(controller) {
 
 addControllerRay(controller1);
 addControllerRay(controller2);
+
+// Panneau de statut visible directement dans le casque VR
+const vrStatusCanvas = document.createElement("canvas");
+vrStatusCanvas.width = 1024;
+vrStatusCanvas.height = 256;
+const vrStatusContext = vrStatusCanvas.getContext("2d");
+const vrStatusTexture = new THREE.CanvasTexture(vrStatusCanvas);
+vrStatusTexture.colorSpace = THREE.SRGBColorSpace;
+
+const vrStatusPanel = new THREE.Mesh(
+  new THREE.PlaneGeometry(1.35, 0.34),
+  new THREE.MeshBasicMaterial({
+    map: vrStatusTexture,
+    transparent: true,
+    depthTest: false
+  })
+);
+vrStatusPanel.position.set(0, 1.48, -1.55);
+vrStatusPanel.renderOrder = 20;
+scene.add(vrStatusPanel);
+
+function updateVRStatus(message, success = false) {
+  vrStatusContext.clearRect(0, 0, vrStatusCanvas.width, vrStatusCanvas.height);
+  vrStatusContext.fillStyle = success ? "rgba(18,75,53,0.96)" : "rgba(15,25,42,0.96)";
+  vrStatusContext.fillRect(0, 0, vrStatusCanvas.width, vrStatusCanvas.height);
+  vrStatusContext.strokeStyle = success ? "#52d48b" : "#66b3ff";
+  vrStatusContext.lineWidth = 12;
+  vrStatusContext.strokeRect(6, 6, vrStatusCanvas.width - 12, vrStatusCanvas.height - 12);
+  vrStatusContext.fillStyle = "#ffffff";
+  vrStatusContext.font = "bold 48px Arial";
+  vrStatusContext.textAlign = "center";
+  vrStatusContext.textBaseline = "middle";
+  vrStatusContext.fillText(message, vrStatusCanvas.width / 2, vrStatusCanvas.height / 2, 940);
+  vrStatusTexture.needsUpdate = true;
+}
+
+updateVRStatus("VR prête · vise Résistance, LED ou Alimentation");
  // Éclairage général
   const ambientLight =
     new THREE.AmbientLight(0xffffff, 1.4);
@@ -896,31 +932,41 @@ if (!missionCompleted) {
 );
 
 // Sélection d'un composant depuis un contrôleur XR
+const xrRotationMatrix = new THREE.Matrix4();
+const xrClickableObjects = [resistor, led, powerConnector];
+let lastHighlightedObject = null;
+
 function selectFromController(controller) {
-// Utiliser directement le rayon WebXR du contrôleur
-raycaster.setFromXRController(controller);
+  // Calcul explicite du rayon à partir de la pose réelle du contrôleur.
+  controller.updateMatrixWorld(true);
+  xrRotationMatrix.identity().extractRotation(controller.matrixWorld);
+  raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
+  raycaster.ray.direction.set(0, 0, -1).applyMatrix4(xrRotationMatrix).normalize();
+  raycaster.near = 0;
+  raycaster.far = 10;
 
-  const xrClickableObjects = [
-    ...resistor.children,
-    ...led.children,
-    ...powerConnector.children
-  ];
+  const intersections = raycaster.intersectObjects(xrClickableObjects, true);
 
-  const intersections =
-    raycaster.intersectObjects(
-      xrClickableObjects,
-      true
-    );
-
-  if (intersections.length > 0) {
-    const selectedObject =
-      intersections[0].object;
-
-    const component =
-      selectedObject.userData.component;
-
-    handleXRSelection(component);
+  if (intersections.length === 0) {
+    updateVRStatus("Aucun composant touché · ajuste le rayon");
+    return;
   }
+
+  const hit = intersections[0];
+  const selectedObject = hit.object;
+  const component = selectedObject.userData.component;
+
+  // Retour visuel immédiat dans le casque.
+  if (lastHighlightedObject && lastHighlightedObject.material && lastHighlightedObject.material.emissive) {
+    lastHighlightedObject.material.emissive.setHex(lastHighlightedObject.userData.previousEmissive || 0x000000);
+  }
+  if (selectedObject.material && selectedObject.material.emissive) {
+    selectedObject.userData.previousEmissive = selectedObject.material.emissive.getHex();
+    selectedObject.material.emissive.setHex(0x33ff99);
+    lastHighlightedObject = selectedObject;
+  }
+
+  handleXRSelection(component);
 }
 function handleXRSelection(component) {
 
@@ -946,6 +992,22 @@ function handleXRSelection(component) {
 
     componentDescription.textContent =
       "L'alimentation fournit l'énergie électrique nécessaire au circuit.";
+  }
+
+  if (component === "resistor") {
+    missionCompleted = true;
+    missionPanel.classList.add("success");
+    missionText.textContent =
+      "✅ Mission réussie ! La résistance limite le courant et contribue à protéger la LED.";
+    missionStatus.textContent =
+      "Progression : 1 / 1 · Mission validée";
+    updateVRStatus("✅ Résistance · Mission réussie", true);
+  } else if (component === "led") {
+    updateVRStatus("LED sélectionnée · cherche la résistance");
+  } else if (component === "power") {
+    updateVRStatus("Alimentation sélectionnée · cherche la résistance");
+  } else {
+    updateVRStatus("Objet touché mais composant non identifié");
   }
 
   componentInfo.hidden = false;
